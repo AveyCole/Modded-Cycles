@@ -15,3 +15,5 @@ Le décompresseur n’utilise pas A3–A6/D7. D0/D1 et A0 sont établis par le c
 ## Limites et suite
 
 Les MOVEC sont observés puis sautés ; le comportement réel des caches ColdFire n’est pas simulé. Le périphérique mémoire est contrôlé. Cette preuve ne couvre pas l’initialisation native après400cefa0, les premières interruptions audio/UI et les callbacks pendant construction des objets. Priorité : tracer cette phase et les contrats des hooks, puis isoler un candidat minimal avant un nouvel essai matériel. Ne pas proposer une nouvelle garde comme solution sans preuve.
+
+Extension vérifiée : après400cefa0, exécution réelle jusqu’à400cf012. Table native de256vecteurs identique, état initial scheduler identique, singleton UI encore nul ; RAW privé toujours intact. La prochaine frontière est le premier service natif d’initialisation400057e8 puis l’activation IRQ/TRAP.

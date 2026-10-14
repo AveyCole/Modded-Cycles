@@ -44,7 +44,15 @@ def main():
  assert not any(t.get('append',{}).get('syntakt') for t in cat),'audit sans moteurs Syntakt'
  spec=importlib.util.spec_from_file_location('audit_build',a.build_module);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
  img,_=build.apply_writes(stock,cat);extra,_=module.build_payload(cat,stock,None);full=bytes(img)+extra
- run(stock,[]);u=run(full,cat)
+ stock_u=run(stock,[]);u=run(full,cat)
+ for cpu in [stock_u,u]:
+  cpu.emu_start(TARGET,0x400cf012,count=100000)
+  assert cpu.reg_read(mk.UC_M68K_REG_PC)==0x400cf012
+  assert bytes(cpu.mem_read(0x40000000,1024))==struct.pack('>I',0x40001976)*256
+  assert bytes(cpu.mem_read(0x422feec8,64))==bytes(64)
+  assert bytes(cpu.mem_read(0x40fe4178,4))==bytes(4)
+ assert bytes(stock_u.mem_read(0x422fef0c,40))==bytes(u.mem_read(0x422fef0c,40))
+ print('PASS init vecteurs native : 256 entrées et état scheduler identiques ; singleton UI pas encore construit.')
  bank=next(t for t in cat if t['id']=='midi-bank-bundle');raw=bytes.fromhex(bank['append']['parts'][0]['hex']);dest=int(bank['append']['dest'],16)
  assert bytes(u.mem_read(dest,len(raw)))==raw
  for at in [0x4019b590,0x40210000,0x41000000,0x423380a0]:assert bytes(u.mem_read(at,16))==bytes(16),hex(at)
