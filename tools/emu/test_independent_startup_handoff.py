@@ -53,9 +53,19 @@ def main():
   assert bytes(cpu.mem_read(0x40fe4178,4))==bytes(4)
  assert bytes(stock_u.mem_read(0x422fef0c,40))==bytes(u.mem_read(0x422fef0c,40))
  print('PASS init vecteurs native : 256 entrées et état scheduler identiques ; singleton UI pas encore construit.')
+ for cpu in [stock_u,u]:
+  cpu.mem_map(0xfc050000,0x1000);cpu.mem_map(0xfc080000,0x1000)
+  cpu.emu_start(0x400cf012,0x400cf040,count=100000)
+  assert cpu.reg_read(mk.UC_M68K_REG_PC)==0x400cf040
+  assert cpu.reg_read(mk.UC_M68K_REG_A7)==STACK-4
+  assert cpu.reg_read(mk.UC_M68K_REG_SR)&0x2700==0x2000
+ for at,size in [(0x404a0ab0,80),(0x404a4af8,12),(0x422fef0c,40),(0xfc050000,80),(0xfc080000,4)]:
+  assert bytes(stock_u.mem_read(at,size))==bytes(u.mem_read(at,size)),hex(at)
+ assert bytes(u.mem_read(0x404a4b00,4))==struct.pack('>I',0x40001a68)
+ print('PASS première tâche native et configuration IRQ identiques ; arrêt avant TRAP0/entrée tâche.')
  bank=next(t for t in cat if t['id']=='midi-bank-bundle');raw=bytes.fromhex(bank['append']['parts'][0]['hex']);dest=int(bank['append']['dest'],16)
  assert bytes(u.mem_read(dest,len(raw)))==raw
  for at in [0x4019b590,0x40210000,0x41000000,0x423380a0]:assert bytes(u.mem_read(at,16))==bytes(16),hex(at)
  print('PASS stock et sans TG : pile, D2-D7/A2-A6, IRQ masquées, registre matériel et entrée native400cefa0 ; RAW préservé.')
- print('LIMITATION : init native, interruptions et caches matériels après cette entrée restent à auditer ; écran blanc non corrigé.')
+ print('LIMITATION : changement de contexte TRAP0, initialisation UI/audio et caches matériels restent à auditer ; écran blanc non corrigé.')
 if __name__=='__main__':main()
