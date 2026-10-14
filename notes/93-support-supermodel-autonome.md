@@ -43,3 +43,8 @@ Expérimental. MOVEC/cache physique, périphériques et cycle de vie complet non
 Les résultats précédents d’écran blanc ne sont pas déclarés corrigés ; ce test
 sans Banque doit être essayé sur machine avant promotion. Les options liées au
 sampler et les autres conflits réels de dispatch restent protégés.
+
+## Testé sur machine le14/10/2026
+
+A.V. : « That seems to work, publish it to main. » Le support sans Banque est
+promu sur demande utilisateur ; la réintégration Banque reste un test séparé.
