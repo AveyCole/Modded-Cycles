@@ -100,3 +100,15 @@ MOVEC est observé sans modèle matériel du cache ; les périphériques et
 frontières UI sont simulés ; aucune charge CPU matérielle n’est revendiquée.
 Les restrictions existantes de combinaisons partielles RETROSYN restent celles
 du main. B reste exclusivement en RAM, sans persistance après extinction.
+
+
+## 5. Testé sur la machine (16/10/2026)
+
+AveyCole confirme directement : « Push MIDI Out bank to main as hardware tested ».
+Cette confirmation du propriétaire autorise le statut tested et la publication
+au principal. Aucun détail de protocole matériel ni mesure CPU supplémentaire
+n’est inventé. Les octets de démarrage, des fonctions MIDI et des moteurs restent
+ceux de la page de test confirmée ; seules intégration au principal, métadonnées,
+textes et documentation changent. La Banque peut être installée seule ou avec
+les machines actuelles dont RETROSYN et TINY ; Sample Wizard reste facultatif.
+B reste en RAM et Model-TG reste bloqué.

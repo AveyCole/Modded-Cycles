@@ -3,7 +3,7 @@
 
 Reprend les huit backends sans TG/sans Chord du prototype independant ; les
 fonctions A actuelles fournissent Chord et leurs propres supports. Aucun
-octet de firmware n'est exporte. Note 97, nouvelle integration experimentale.
+octet de firmware n'est exporte. Note 97, test materiel confirme par AveyCole.
 """
 import argparse,copy,hashlib,json,pathlib,shutil,struct,subprocess,sys,tempfile
 HERE=pathlib.Path(__file__).resolve().parent
@@ -45,7 +45,7 @@ def tempo(row,cross):
     b['symbols'].update({k:hex(v) for k,v in new.items() if k.startswith('ml_tempo_')})
     b['symbols']['ML_BANK_END']=hex(origin+len(raw))
     part['hex']=raw.hex();ap['size']=len(raw);ap.pop('compressed_hex',None)
-    b['midi_tempo_native']=True;b['status']='experimental'
+    b['midi_tempo_native']=True;b['status']='tested';b['hardwareTestedByOwner']=True
     return row
 
 def generate(cross):
@@ -71,7 +71,7 @@ def generate(cross):
     return '// Genere par tools/gen_midi_current.py ; aucun firmware.\nwindow.MCMidiCurrent=(()=>{'+JS_DECODER+'return unpackCatalogue('+json.dumps(packed,separators=(',',':'))+');})();\n'
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',default='docs/flasher-midi-current-test/midi-bank-data.js');p.add_argument('--check',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',default='docs/flasher/midi-bank-data.js');p.add_argument('--check',action='store_true');a=p.parse_args()
     cross=next((c for c in ('m68k-linux-gnu-','m68k-elf-') if shutil.which(c+'as')),'m68k-linux-gnu-')
     text=generate(cross);out=pathlib.Path(a.output)
     if a.check:assert out.read_text(encoding='utf-8')==text

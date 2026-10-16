@@ -1,6 +1,6 @@
 // Cases navigateur reelles ; les fichiers officiels restent locaux.
 const fs=require('fs'),path=require('path'),assert=require('node:assert/strict');
-process.env.RETROSYN_PAGE=process.env.RETROSYN_PAGE||'docs/flasher-midi-current-test';
+process.env.RETROSYN_PAGE=process.env.RETROSYN_PAGE||'docs/flasher';
 const {open,change}=require('./test_retrosyn_flasher');
 const dir=path.resolve(__dirname,'../build/midi-current');fs.mkdirSync(dir,{recursive:true});
 const cycles=Uint8Array.from(fs.readFileSync(path.resolve(__dirname,'../firmware/model-cycles_OS1.13.syx'))),syntakt=Uint8Array.from(fs.readFileSync(path.resolve(__dirname,'../firmware/Syntakt_OS1.42.syx')));
@@ -15,7 +15,7 @@ profiles.push({name:'all',all:true},{name:'all-boot',all:true,animation:'boot-an
   const overview=w.document.querySelector('a[href="quick-reference.md"]');
   assert(overview.closest('p').nextElementSibling.querySelector('a[href="convert.html"]'),'converter below overview');
   assert(!w.document.body.textContent.includes('MIDI OUT Bank is now exclusive'));
-  assert.equal(w.MC_TWEAKS.features.find(f=>f.id==='midi-out-bank').status,'experimental');
+  assert.equal(w.MC_TWEAKS.features.find(f=>f.id==='midi-out-bank').status,'tested');
   for(const lang of ['en','fr']){w.MCFlasherApp.applyLang(lang);assert(w.document.getElementById('det-midi-out-bank').textContent.includes('RAM'));}
   change(w,'midi-out-bank',true);
   if(p.all)w.document.getElementById('select-all').click();
