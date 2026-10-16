@@ -24,6 +24,7 @@ u32 br_old_key STATE=0,br_old_gain STATE=0x40056d9c;
 u32 br_side STATE=0,br_side_on STATE=0;
 u32 br_mask_address STATE=0,br_excluded STATE=0,br_lane_wet[6] STATE={0};
 u32 br_old_track_keys STATE=0,br_old_track_leds STATE=0;
+u32 br_load_address STATE=0,br_avg_address STATE=0,br_load_peak STATE=0;
 const u32 br_divs[16]={QN/16,QN/12,QN/8,QN/6,QN/4,QN/3,QN/2,QN*2/3,
  QN*3/4,QN,QN*4/3,QN*3/2,QN*2,QN*8/3,QN*3,QN*4};
 static u32 ipl(void){unsigned short sr;__asm__ volatile("move.w %%sr,%0":"=d"(sr));return sr&0x700;}
@@ -37,6 +38,19 @@ static int prepare(void){
  __asm__ volatile("":::"memory");br_history=p;return 1;
 }
 extern void br_popup(const char *text);
+/* Diagnostic facultatif : affiche depuis l UI, jamais depuis l interruption. */
+static char *load_percent(char *p,u32 q){
+ u32 v=q>2557?999:q*100/256;
+ if(v>=100)*p++='0'+v/100;
+ if(v>=10)*p++='0'+v/10%10;
+ *p++='0'+v%10;*p++='%';return p;
+}
+static void load_popup(void){
+ if(!br_load_address||!br_avg_address||ipl())return;
+ char text[24],*p=text;*p++='C';*p++='P';*p++='U';*p++=' ';
+ p=load_percent(p,*(volatile u32 *)br_avg_address);*p++=' ';*p++='/';*p++=' ';
+ p=load_percent(p,br_load_peak);*p=0;br_popup(text);
+}
 static const char *const labels[16]={"1/64","1/48","1/32","1/24","1/16","1/12","1/8","1/6","3/16","1/4","1/3","3/8","1/2","2/3","3/4","1 BAR"};
 static void select_held(void){
  i32 previous=br_requested;
@@ -56,8 +70,9 @@ static u32 modifier(u32 code,u32 down,u32 fresh){
   if(old!=br_keys)repaint();
   if(br_keys==3&&old!=3){
    for(u32 i=0;i<16;i++)br_held[i]=0;br_requested=-1;
-   br_cancel=0;if(!prepare())br_cancel=1;
+   br_cancel=0;br_load_peak=0;if(!prepare())br_cancel=1;
   }
+  if(old==3&&br_keys!=3)load_popup();
   if(br_keys!=3){br_requested=-1;for(u32 i=0;i<16;i++)br_held[i]=0;}
   if(code==RETRIG){
    if(fresh&&(br_keys&1)){br_retrig_owned=1;return 1;}
@@ -210,4 +225,4 @@ static void render(u32 now,i32 target){
  }
  render_tracks(now,frames);br_wet=wet;
 }
-void br_audio(void){i32 target=target_now();u32 now=br_blocks++<<5;br_excluded=br_mask_address?*(volatile u8 *)br_mask_address:0;if(br_history)render(now,target);}
+void br_audio(void){if(br_load_address&&br_keys==3){u32 load=*(volatile u32 *)br_load_address;if(load>br_load_peak)br_load_peak=load;}i32 target=target_now();u32 now=br_blocks++<<5;br_excluded=br_mask_address?*(volatile u8 *)br_mask_address:0;if(br_history)render(now,target);}

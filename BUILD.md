@@ -858,3 +858,7 @@ Promotion demandee par AveyCole, packing identique au candidat note 104. `tools/
 AveyCole confirme le test 4 sur machine le 16/10/2026 et demande promotion. `python3 tools/gen_filter_load_main.py --check` : memes noyaux filtre/repeat que le candidat confirme. Huit profils principaux doivent donner les memes hashes que `build/filter-load/cases.json`. Banque MIDI reste experimentale ; [note 105](notes/105-charge-filtre.md).
 
 Parite huit profils confirmee. Complet MIDI MAIN OS SHA-256 `2b7768d44d33b9bdcfec1b52f7cabbd6bd738693b93e1107b62ee5ea39dae766` ; complet sans MIDI `a9c4fa7f6c6ac4c233050f758ad8a804aa561750da613e4750805be18789a132`. Firmware genere identique au test 4, seuls statuts/textes et cache web changent.
+
+## Test SY experimental — note 106
+
+Page separee `flasher-sy-load-test`, principal 1.78 inchange. `tools/gen_swarm_lite.py` puis `tools/gen_swarm_lite_flasher.py`, `--check`. Somme trois voix SWARM facultative et helper exact separe ; diagnostic charge repeat facultatif. `tools/emu/test_sy_load.py` : DSP Syntakt complet, audio Toy/Bits exact, Swarm lite attendu different ; pas une mesure CPU physique. Regulateur et boot/cache controles separement.

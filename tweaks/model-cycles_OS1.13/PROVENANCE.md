@@ -171,3 +171,5 @@ Promotion capacite 1.77 demandee par AveyCole le 16/10/2026. Stage et packing in
 Optimisation propre de `precision.s` (note 102), `tools/machines/track_filter/load.s` : clamps redondants retires uniquement. Meme algorithme ladder partage TinyGregAudio (MIT), credits conserves. Code AveyCole / Modded-Cycles sous MIT ; aucun octet Elektron ajoute. Test seulement, correction physique des ticks non affirmee.
 
 Principal 1.78 (16/10/2026) : note 105, ladder haute precision et refonte de charge beat repeat propres au projet (algorithme repeat TinyGregAudio MIT deja credite). Code identique au test 4 confirme par AveyCole ; `gen_filter_load_main.py`. Aucun octet OS ajoute aux sources.
+
+Test SY charge (note 106) : somme trois oscillateurs et helper sinus propres au projet, gardes SHA sur regions du DSP Syntakt extrait au build. Sources `tools/machines/syntakt_load/`, diagnostic du beat repeat existant (credits MIT TinyGregAudio conserves). Statut experimental, aucune promotion principale.
