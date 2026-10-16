@@ -180,4 +180,4 @@ Générateur de séquence (note 53) : **testé sur la machine par AveyCole le 10
 
 | [105 — Charge filtre](105-charge-filtre.md) | Candidat : checks redondants retires, samples/etats identiques ; 22–36 % d instructions filtre en moins (candidat 2) ; test 4 confirme sur machine par AveyCole, promu 1.78 ; repeat actif -37 %, combo seul -77 % en instructions emulees. |
 
-| [106 — Charge Syntakt](106-charge-syntakt.md) | Enquete apres 1.78 ; test facultatif Swarm trois voix (-37,36 % instructions DSP), helper exact (pas de gain Toy/Bits mesure) et diagnostic CPU au relachement repeat. Verification physique/projet vierge attendue. |
+| [106 — Charge Syntakt](106-charge-syntakt.md) | Enquete apres 1.78 ; test 2 : repeat partage exact (-43,7 % etabli, -14,2 % capture), Swarm trois voix facultatif (-37,36 % instructions DSP) et diagnostic CPU au relachement. Verification physique/projet vierge attendue. |

@@ -11,7 +11,7 @@ from test_sdvintage import main_os_from_syx
 ORIGIN=0x46a00000
 N=131072
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--cycles',default='firmware/model-cycles_OS1.13.syx');p.add_argument('--data',required=True);p.add_argument('--case');p.add_argument('--meter',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--cycles',default='firmware/model-cycles_OS1.13.syx');p.add_argument('--data',required=True);p.add_argument('--case');p.add_argument('--meter',action='store_true');p.add_argument('--fast',action='store_true');a=p.parse_args()
     data=json.loads(pathlib.Path(a.data).read_text());stock=main_os_from_syx(a.cycles)
     case=None;origin=ORIGIN
     if a.case:
@@ -25,7 +25,7 @@ def main():
     r.s={k:origin+v for k,v in data['symbols'].items()}
     if case:
         expected=bytes.fromhex(tweak['append']['parts'][0]['hex'])
-        for name in ('br_old_key','br_old_gain','br_side','br_side_on','br_mask_address','br_old_track_keys','br_old_track_leds','br_load_address','br_avg_address'):
+        for name in ('br_old_key','br_old_gain','br_side','br_side_on','br_mask_address','br_old_track_keys','br_old_track_leds','br_load_address','br_avg_address','br_fast_enabled'):
             if name not in data['symbols']:continue
             off=data['symbols'][name];code[off:off+4]=expected[off:off+4]
         assert bytes(code)==expected,'module navigateur different du module prouve'
@@ -52,6 +52,7 @@ def main():
         assert u.reg_read(mk.UC_M68K_REG_PC)==STOP,('retour',name,hex(u.reg_read(mk.UC_M68K_REG_PC)))
         assert u.reg_read(mk.UC_M68K_REG_A7)==STACK+4,('pile',name)
         return u.reg_read(mk.UC_M68K_REG_D0)
+    if a.fast:r.w32(r.s['br_fast_enabled'],1)
     def get(name):return r.r32(r.s[name])
     def put(name,v):r.w32(r.s[name],v)
     def key(code,flags=1):

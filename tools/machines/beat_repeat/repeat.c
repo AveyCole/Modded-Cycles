@@ -25,6 +25,7 @@ u32 br_side STATE=0,br_side_on STATE=0;
 u32 br_mask_address STATE=0,br_excluded STATE=0,br_lane_wet[6] STATE={0};
 u32 br_old_track_keys STATE=0,br_old_track_leds STATE=0;
 u32 br_load_address STATE=0,br_avg_address STATE=0,br_load_peak STATE=0;
+u32 br_fast_enabled STATE=0;
 const u32 br_divs[16]={QN/16,QN/12,QN/8,QN/6,QN/4,QN/3,QN/2,QN*2/3,
  QN*3/4,QN,QN*4/3,QN*3/2,QN*2,QN*8/3,QN*3,QN*4};
 static u32 ipl(void){unsigned short sr;__asm__ volatile("move.w %%sr,%0":"=d"(sr));return sr&0x700;}
@@ -192,17 +193,50 @@ static i32 target_now(void){
 /* Combo tenu sans division : historique seulement, aucune interpolation.
  * Ordre piste/sample pour lire chaque bloc contigu ; quantification identique.
  */
+static inline __attribute__((always_inline)) i16 history_sample(i32 live){
+ i32 q=live>>15;if(q>32767)q=32767;if(q< -32767)q=-32767;return (i16)q;
+}
 static void record_block(u32 now){
  for(u32 track=0;track<(br_side?12u:6u);track++){
   u32 lane=track,base=0x80001858;
   if(track>=6){lane-=6;if(!((u32 *)br_side_on)[lane])continue;base=br_side;}
   i32 *channel=(i32 *)(base+128*lane);
   i16 *history=br_history+N*track+(now&MASK);
-  for(u32 i=0;i<32;i++){
-   i32 q=channel[i]>>15;if(q>32767)q=32767;if(q< -32767)q=-32767;
-   history[i]=(i16)q;
-  }
+  if(br_fast_enabled){
+   for(u32 i=0;i<32;i+=4){
+    history[i]=history_sample(channel[i]);history[i+1]=history_sample(channel[i+1]);
+    history[i+2]=history_sample(channel[i+2]);history[i+3]=history_sample(channel[i+3]);
+   }
+  }else for(u32 i=0;i<32;i++)history[i]=history_sample(channel[i]);
  }
+}
+/* Bloc etabli : enveloppe et mix pleins, indices contigus et lectures sans
+ * chevauchement futur avec la capture. Tous les autres cas gardent le chemin
+ * general, y compris changements de masque, fondus, bords et wraps. */
+static void steady_channel(i32 *channel,i16 *history,u32 read){
+ for(u32 i=0;i<32;i++){
+  i32 live=channel[i],repeated=(i32)((u32)(i32)history[read+i]<<15);
+  i32 difference=((repeated>>8)-(live>>8))>>1;
+  channel[i]=(i32)((u32)live+((u32)difference<<9));
+ }
+}
+static u32 try_steady(u32 now,u32 elapsed,u32 phase,u32 length,u32 scale){
+ if(!br_fast_enabled||phase+31>=length||phase*scale<65536||(length-phase-31)*scale<65536)return 0;
+ for(u32 lane=0;lane<6;lane++)
+  if(br_lane_wet[lane]!=((br_excluded&(1u<<lane))?0u:65536u))return 0;
+ u32 end=elapsed+31,age=elapsed&MASK,write=now&MASK,read=(br_start+phase)&MASK;
+ if(end<elapsed||age>MASK-31||write>MASK-31||read>MASK-31)return 0;
+ u32 record=elapsed<length||age>=length;
+ if(record!=(end<length||((end&MASK)>=length)))return 0;
+ if(record&&read!=write&&read<write+32&&write<read+32)return 0;
+ if(br_side&&br_side<0x80001b58u&&br_side+768>0x80001858u)return 0;
+ if(record)record_block(now);
+ for(u32 lane=0;lane<6;lane++)if(!(br_excluded&(1u<<lane))){
+  steady_channel((i32 *)(0x80001858+128*lane),br_history+N*lane,read);
+  if(br_side&&((u32 *)br_side_on)[lane])
+   steady_channel((i32 *)(br_side+128*lane),br_history+N*(lane+6),read);
+ }
+ return 1;
 }
 static void render(u32 now,i32 target){
  if(br_valid&&target!=br_active&&br_wet)target=-1;
@@ -214,7 +248,9 @@ static void render(u32 now,i32 target){
  }
  u32 wet=br_wet,length=br_length,elapsed=now-br_start;
  u32 phase=br_valid?elapsed%length:0,ramp=length/4;if(ramp>32)ramp=32;if(!ramp)ramp=1;
- u32 scale=65536/ramp;struct br_frame frames[32];
+ u32 scale=65536/ramp;
+ if(br_valid&&target>=0&&br_active==target&&wet==65536&&try_steady(now,elapsed,phase,length,scale))return;
+ struct br_frame frames[32];
  for(u32 i=0;i<32;i++){
   if(target>=0&&br_valid){wet+=1024;if(wet>65536)wet=65536;}else wet=wet>1024?wet-1024:0;
   u32 envelope=phase*scale,tail=(length-phase)*scale;

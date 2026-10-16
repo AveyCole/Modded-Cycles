@@ -862,3 +862,5 @@ Parite huit profils confirmee. Complet MIDI MAIN OS SHA-256 `2b7768d44d33b9bdcfe
 ## Test SY experimental — note 106
 
 Page separee `flasher-sy-load-test`, principal 1.78 inchange. `tools/gen_swarm_lite.py` puis `tools/gen_swarm_lite_flasher.py`, `--check`. Somme trois voix SWARM facultative et helper exact separe ; diagnostic charge repeat facultatif. `tools/emu/test_sy_load.py` : DSP Syntakt complet, audio Toy/Bits exact, Swarm lite attendu different ; pas une mesure CPU physique. Regulateur et boot/cache controles separement.
+
+Test SY 2 : `test_repeat_steady.py --data build/swarm-lite/beat-meter-data.json` et preuves repeat actif/repos contre principal 1.78. Chemin etabli exact et capture deroulee, conditionnes par la carte Optimisation repeat / SY. Diagnostic seul sert de comparaison avec voie rapide inactive.

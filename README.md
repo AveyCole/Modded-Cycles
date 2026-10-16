@@ -165,4 +165,4 @@ The hardware-tested saving build is now in main. Extra MIDI files remain outside
 
 Main 1.78 uses the filter and beat-repeat workload repairs confirmed on hardware by AveyCole, including multiple Syn Swarms. Same firmware code as filter-load test 4; MIDI OUT Bank remains optional and experimental.
 
-Experimental [SY load test](https://aveycole.github.io/Modded-Cycles/flasher-sy-load-test/) offers an optional three-oscillator Syn Swarm and an audio-load readout on repeat release. Lite Swarm changes timbre/level; Toy/Bits have no measured helper saving in the current tests. Main 1.78 remains unchanged. See [note 106](notes/106-charge-syntakt.md).
+Experimental [SY load test](https://aveycole.github.io/Modded-Cycles/flasher-sy-load-test/) offers a shared exact repeat optimization for all voice types, optional three-oscillator Syn Swarm, and an audio-load readout on repeat release. Lite changes timbre/level; Toy/Bits generators remain unchanged while the shared repeat path gains headroom. Main 1.78 remains unchanged. See [note 106](notes/106-charge-syntakt.md).
