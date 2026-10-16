@@ -24,7 +24,7 @@ def main():
    def count(u,pc,size,user,r=r):r.count+=1
    u.hook_add(UC_HOOK_CODE,count,begin=ORIGIN,end=ORIGIN+len(code))
    for name,value in [('br_history',0x41000000),('br_keys',3),('br_requested',-1),('br_blocks',4094),('br_side',0x80010000 if stereo else 0),('br_side_on',0x80011000 if stereo else 0)]:r.w32(r.s[name],value&0xffffffff)
-   
+
    if 'br_fast_enabled' in r.s:r.w32(r.s['br_fast_enabled'],1)
    r.w32(0x40a7883c,1);r.w32(0x40a78840,1);r.w32(0x40149310,57600);r.w32(r.s['br_mask_address'],0x80012000)
    rigs.append(r)
