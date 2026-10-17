@@ -866,3 +866,7 @@ AveyCole demande le 16/10/2026 de remplacer Swarm sept oscillateurs par trois, a
 ### Test 909 sur Sample Wizard actuel (note 108)
 
 Executer export_909_current_scaffold.js avec Node, puis gen_909_current.py (GCC ColdFire) et gen_909_current_page.py ; generateurs avec --check. test_909_current.js exporte build/909-current/all.json et all.syx, locaux ignores. test_909_current.py prouve les voix natives vs C hote apres boot/cache ; regressions MIDI/Genie/sauvegarde/repeat sur ce catalogue. Profil sans Syntakt/Model-TG, quatre WAV utilisateur requis. Page test seulement avant validation materielle. Edition 909 publiee conservee, main modifie uniquement pour le lien visuel.
+
+### Test MIDI performance (note 109)
+
+`gen_midi_performance.py` compile le corps propre ; `gen_midi_performance_page.py` prepare la page isolee. `test_909_current.js` avec RETROSYN_909_PAGE=docs/flasher-midi-performance-test et RETROSYN_909_CASE=build/midi-performance/all construit la fixture locale. `test_midi_performance.py --case build/midi-performance/all` verifie bootstrap, file native, gestes et setters audio/MIDI. Generateurs avec --check. Test uniquement, sans promotion materielle.
