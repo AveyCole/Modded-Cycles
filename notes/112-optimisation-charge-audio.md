@@ -60,3 +60,8 @@ Le repeat partage maintenant l addition `br_start+phase` et le masque circulaire
 
 
 Validation finale test2 : aucune branche externe ni pointeur absolu vers les regions natives decalees dans l image officielle.17 machines comparees,6 pistes de chaque type,4 blocs chacune : sorties exactes. Le cas Kick/Snare/Metal/Perc/Tone/SDVtg repete/filtre passe16 blocs : instructions des seuls modules filtre+repeat152 472 vers146 013 face au diagnostic2, sans compter les economies des fonctions voix. Registres preserves verifies explicitement dans les1 024 appels natifs aleatoires. Cinq builds navigateur/signature et parites Python passent. Publication test uniquement, sans resultat physique affirme.
+
+
+## Test 3 : isoler la regression machine (17/10/2026)
+
+AveyCole rapporte80 % moyenne /101 % pic /CUT3 pour le test2, contre79/96/CUT1 au test1. Regression observee ; les gains en instructions ne garantissent pas un gain physique. Test3 retire entierement le tweak natif oscillateurs du compositeur. Il garde la base filtre/slides/fades du test1 et uniquement le nouvel index historique repeat du test2, pour isoler les deux variables. Aucune conclusion causale avant comparaison machine. Les recettes et preuves natives restent disponibles pour recherche, mais aucune ecriture native correspondante n est appliquee. Diagnostic uniquement en test ; principal inchange.
