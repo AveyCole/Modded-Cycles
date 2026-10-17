@@ -23,3 +23,14 @@ La file native `ml_step` reserve un Off avant chaque On. Le wrapper ne fait aucu
 Regressions sur le SYX navigateur reel : banque/scheduler, persistance, Genie, filtre courant, repeat audio, six voix 909. Test navigateur : quatre FileReader, signature, refus firmware modifie, remplacement/retrait WAV et absence de transfert automatique. Parite Python/navigateur. Aucun firmware, dump ni sample utilisateur publie.
 
 `gen_midi_performance_page.py` cree uniquement `docs/flasher-midi-performance-test`. Nouvelle combinaison experimentale, verification hardware requise. Le 909 publie et le main ne recoivent pas ces nouveaux comportements avant validation AveyCole.
+
+
+## Retour AveyCole et tests UI du 16/10/2026
+
+AveyCole confirme les repetitions MIDI du premier test, mais signale les gestes bloques par les callbacks bruts de B. Les nouveaux wrappers `mlp_menu_key`, `mlp_enc`, `mlp_render` et `mlp_led` relient TRACK+RETRIG, MACHINES+SWEEP/CONTOUR et leur affichage directement dans B. La fenetre filtre expire apres 1 500 ms sans changement de vue. BACK et FUNC+SETTINGS+TRACK gardent la fermeture native.
+
+Deux pages experimentales : profil 909 test.2 et copie checklist normale main-test.1. La seconde conserve les choix machines habituels, sans WAV ni kit 909 imposes. Sans banque MIDI OUT, le composeur retourne le catalogue intact : configuration Control All six voyants habituels.
+
+Avec la banque, TRACK+TRIG 7–12 configure un masque MIDI RAM independant ; 1–6 reste audio. Les wrappers TrackSelectionView et B affichent douze pads ; TRACK+RETRIG conserve les seize divisions. Appuis longs/repetes et relachements sont consommes une seule fois. Masque MIDI pour repeat et CC filtre ; masque audio pour les setters audio. La voie selectionnee suit toujours, comme le Control All existant. Reinitialisation au demarrage.
+
+[FAIT en emulation] Boot/cache, seize divisions, 64 masques MIDI, callbacks bruts A/B, douze voyants, gestes filtre, retour B et deux sorties. Navigateur : 909 quatre WAV et main sans banque, banque/repeat seul, filtre sans repeat et tous mods. Regressions scheduler natif, persistance et precision filtre. Verification physique des nouveaux gestes et masques encore requise ; les pages publiees main/909 restent inchangees.

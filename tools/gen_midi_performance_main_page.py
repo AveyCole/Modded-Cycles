@@ -1,0 +1,17 @@
+"""Note 109 : copie normale de la checklist main, extension MIDI en test."""
+import argparse,pathlib,re,shutil,tempfile
+ROOT=pathlib.Path(__file__).resolve().parents[1];STAMP='2026-10-16-midi-performance-main-test-1'
+def main():
+ p=argparse.ArgumentParser();p.add_argument('--check',action='store_true');a=p.parse_args();target=ROOT/'docs/flasher-midi-performance-main-test';tmp=tempfile.TemporaryDirectory(dir=ROOT/'build') if a.check else None;out=pathlib.Path(tmp.name) if tmp else target;out.mkdir(exist_ok=True)
+ for f in (ROOT/'docs/flasher').iterdir():
+  if f.is_file() and f.suffix!='.wav':shutil.copyfile(f,out/f.name)
+ for name,source in [('midi-performance.js',ROOT/'tools/web/midi-performance.js'),('midi-performance-data.js',ROOT/'build/midi-performance-data.js')]:shutil.copyfile(source,out/name)
+ s=(out/'index.html').read_text(encoding='utf-8');s=re.sub(r'(?<=\?v=)[\w.-]+',STAMP,s);s=re.sub(r"window.MC_BUILD='[^']+'",f"window.MC_BUILD='{STAMP}'",s)
+ s=re.sub(r'<title>.*?</title>','<title>Main checklist — MIDI performance test</title>',s,count=1);s=re.sub(r'<h1>.*?</h1>','<h1>Main checklist<br><span>MIDI performance test</span></h1>',s,count=1,flags=re.S)
+ text='<p><span data-l="en"><strong>Experimental main checklist copy.</strong> Choose your usual machines and mods. MIDI OUT Bank enables the B-side additions; select Per-track filter for MACHINES + SWEEP/CONTOUR on one track, adding TRACK for Control All over internal audio and MIDI CC74/CC71. The filter controls appear briefly and return to B. Add Control All Beat Repeat to use TRACK + RETRIG + division pads from A or B, including MIDI B-note repeats. Hold TRACK: pads 1–6 configure audio inclusion; pads 7–12 independently configure MIDI lanes. Without MIDI OUT Bank, only the usual six lights remain. Choices reset at power-on; the selected lane always follows. Normal MIDI/BACK exit remains available. No 909 kit or four WAV uploads required. Unreleased behavior: hardware verification pending.</span><span data-l="fr"><strong>Copie experimentale de la checklist main.</strong> Choisir machines/mods habituels. Banque MIDI OUT pour les ajouts B ; filtre par piste pour MACHINES + SWEEP/CONTOUR, ajouter TRACK pour Control All audio + CC74/CC71. Affichage filtre bref puis retour B. Ajouter beat repeat pour TRACK + RETRIG + pads depuis A/B, notes B incluses. Maintenir TRACK : pads 1–6 pour audio, 7–12 pour MIDI independant. Sans banque MIDI, six voyants habituels. Choix en RAM ; voie selectionnee toujours incluse. Sortie B habituelle conservee. Sans kit 909 ni quatre WAV imposes. Verification materielle requise.</span></p>'
+ s=s.replace('<main class="wrap fl">','<main class="wrap fl">'+text).replace('../assets/release.js?','test-release.js?').replace('</body>',f'<script src="midi-performance-data.js?v={STAMP}"></script><script src="midi-performance.js?v={STAMP}"></script></body>');(out/'index.html').write_text(s,encoding='utf-8')
+ (out/'test-release.js').write_text('window.MC_RELEASES=[{version:"MIDI-main-test.1",date:"2026-10-16",changes:[{en:"Main checklist MIDI performance test; hardware verification pending.",fr:"Test MIDI performance checklist main ; verification materielle requise."}]}];\n',encoding='utf-8')
+ if a.check:
+  for f in out.iterdir():assert f.read_bytes().replace(b'\r\n',b'\n')==(target/f.name).read_bytes().replace(b'\r\n',b'\n'),f.name
+ print('PASS copie checklist main MIDI separee')
+if __name__=='__main__':main()
