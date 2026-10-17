@@ -2,7 +2,7 @@
 Capture avant ah_noenv : calcul 909 exact et un seul passage Wizard par voix.
 Peripheriques/cache physique non emules ; samples synthetiques locaux.
 """
-import ctypes,json,pathlib,struct,subprocess,tempfile,sys
+import argparse,ctypes,json,pathlib,struct,subprocess,tempfile,sys
 from unicorn import UC_HOOK_CODE,m68k_const as mk
 HERE=pathlib.Path(__file__).resolve().parent;sys.path[:0]=[str(HERE),str(HERE.parent)]
 from test_midi_current_audio import boot
@@ -11,7 +11,8 @@ import mcengine as E
 import emac
 ROOT=HERE.parents[1]
 def main():
- image,runtime,ts,ram=boot('build/909-current/all',with_sram=True);drum=next(t for t in ts if t['id']=='model909-wizard-acid');s={k:int(v,16) for k,v in drum['symbols'].items()};ws=next(t['symbols'] for t in ts if t['id']=='sample-wizard');ah=int(ws['ah_noenv'],16)
+ parser=argparse.ArgumentParser();parser.add_argument('--case',default='build/909-current/all');args=parser.parse_args()
+ image,runtime,ts,ram=boot(args.case,with_sram=True);drum=next(t for t in ts if t['id']=='model909-wizard-acid');s={k:int(v,16) for k,v in drum['symbols'].items()};ws=next(t['symbols'] for t in ts if t['id']=='sample-wizard');ah=int(ws['ah_noenv'],16)
  data=json.loads((ROOT/'build/909-current/engine-data.js').read_text().split('=',1)[1].strip().rstrip(';'));code=next(p for p in data['engine']['append']['parts'] if p['dest']=='0x46709000');own=bytes.fromhex(code['hex']);codefile=ROOT/'build/909-current/emac-909.bin';codefile.write_bytes(own);hooks=emac.disasm(str(codefile),0x46709000,0x46709000,0x46709000+len(own))
  with tempfile.TemporaryDirectory() as tmp:
   p=pathlib.Path(tmp);src=ROOT/'tools/machines/model909_full'
