@@ -25,6 +25,7 @@ u32 br_side STATE=0,br_side_on STATE=0;
 u32 br_mask_address STATE=0,br_excluded STATE=0,br_lane_wet[6] STATE={0};
 u32 br_old_track_keys STATE=0,br_old_track_leds STATE=0;
 u32 br_load_address STATE=0,br_avg_address STATE=0,br_load_peak STATE=0;
+u32 br_fading_address STATE=0,br_stolen_address STATE=0,br_cut_seen STATE=0;
 u32 br_fast_enabled STATE=0;
 const u32 br_divs[16]={QN/16,QN/12,QN/8,QN/6,QN/4,QN/3,QN/2,QN*2/3,
  QN*3/4,QN,QN*4/3,QN*3/2,QN*2,QN*8/3,QN*3,QN*4};
@@ -48,9 +49,14 @@ static char *load_percent(char *p,u32 q){
 }
 static void load_popup(void){
  if(!br_load_address||!br_avg_address||ipl())return;
- char text[24],*p=text;*p++='C';*p++='P';*p++='U';*p++=' ';
- p=load_percent(p,*(volatile u32 *)br_avg_address);*p++=' ';*p++='/';*p++=' ';
- p=load_percent(p,br_load_peak);*p=0;br_popup(text);
+ char text[32],*p=text;*p++='C';*p++='P';*p++='U';*p++=' ';
+ p=load_percent(p,*(volatile u32 *)br_avg_address);*p++='/';
+ p=load_percent(p,br_load_peak);
+ if(br_fading_address&&br_stolen_address){
+  u32 count=0;for(u32 i=0;i<6;i++)count+=(br_cut_seen>>i)&1;
+  *p++=' ';*p++='C';*p++='U';*p++='T';*p++=' ';*p++='0'+count;
+ }
+ *p=0;br_popup(text);
 }
 static const char *const labels[16]={"1/64","1/48","1/32","1/24","1/16","1/12","1/8","1/6","3/16","1/4","1/3","3/8","1/2","2/3","3/4","1 BAR"};
 static void select_held(void){
@@ -71,7 +77,7 @@ static u32 modifier(u32 code,u32 down,u32 fresh){
   if(old!=br_keys)repaint();
   if(br_keys==3&&old!=3){
    for(u32 i=0;i<16;i++)br_held[i]=0;br_requested=-1;
-   br_cancel=0;br_load_peak=0;if(!prepare())br_cancel=1;
+   br_cancel=0;br_load_peak=0;br_cut_seen=0;if(!prepare())br_cancel=1;
   }
   if(old==3&&br_keys!=3)load_popup();
   if(br_keys!=3){br_requested=-1;for(u32 i=0;i<16;i++)br_held[i]=0;}
@@ -261,4 +267,8 @@ static void render(u32 now,i32 target){
  }
  render_tracks(now,frames);br_wet=wet;
 }
-void br_audio(void){if(br_load_address&&br_keys==3){u32 load=*(volatile u32 *)br_load_address;if(load>br_load_peak)br_load_peak=load;}i32 target=target_now();u32 now=br_blocks++<<5;br_excluded=br_mask_address?*(volatile u8 *)br_mask_address:0;if(br_history)render(now,target);}
+void br_audio(void){if(br_load_address&&br_keys==3){u32 load=*(volatile u32 *)br_load_address;if(load>br_load_peak)br_load_peak=load;
+ /* Observer seulement : aucun flag du regulateur n est modifie. */
+ if(br_fading_address&&br_stolen_address)for(u32 i=0;i<6;i++)
+  if(((volatile u8 *)br_fading_address)[i]||((volatile u8 *)br_stolen_address)[i])br_cut_seen|=1u<<i;
+ }i32 target=target_now();u32 now=br_blocks++<<5;br_excluded=br_mask_address?*(volatile u8 *)br_mask_address:0;if(br_history)render(now,target);}

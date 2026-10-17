@@ -51,3 +51,15 @@ Le module nouveau est installe si diagnostic OU optimisation est coche. Diagnost
 Banc long du regulateur termine : TOUT OK, y compris charge soutenue moyenne initiale zero (600 blocs), pics et choix audible. Test 2 est une nouvelle publication separee ; aucune nouvelle confirmation physique, principal toujours 1.78.
 
 Validation finale test 2 : quatorze profils navigateur/Python identiques, dont Lite seul sans repeat (cinq edits), optimisation sept oscillateurs et sans Wizard. Regressions natives repeat/filtre/MIDI/sauvegarde et boot/cache passent ; regulateur long TOUT OK. Principal 1.78 inchange.
+
+## Retour materiel test 2 et enquete recuperation (16/10/2026)
+
+AveyCole mesure 79 % moyen / 103 % pic avec optimisation active et Lite inactif ; clicks encore presents. Son dernier precisement : ajout de Syntakt declenche filtre/repeat clicky, puis symptome encore avec Toy/Bits apres premiere occurrence. Le projet vierge stock n a toujours pas ete verifie. Ces retours ne prouvent ni corruption d etat ni causalite Swarm seule. Test 2 non confirme comme correction.
+
+[FAIT en emulation] `test_governor_recovery.py` execute les callbacks natifs gate/after/audio_end avec six signaux synthetiques et minuteur force : 110 % pendant 40 blocs, puis 45 %, retrigger des six voies et remplacement par stock. Extinctions observees, puis aucun flag fading/stolen ni quantification residuelle apres retrigger. Cette preuve isolee ne couvre pas DSP SY/filtre/repeat, cache physique ni interruption ; elle ne reproduit pas le defaut utilisateur.
+
+Test 3 diagnostique : la carte diagnostic lit, sans ecrire, les six octets fading et stolen du regulateur a chaque bloc pendant TRACK + RETRIG. Union des pistes pendant le combo, remise a zero au debut du combo ; popup CPU moyenne/pic CUT n. CUT est le nombre de pistes distinctes vues en fondu ou suspendues, y compris deja suspendues avant le combo. Ce n est ni un compteur d underruns ni le nombre de voix coupees au moment exact du popup. Aucun changement d algorithme sonore ni seuil du regulateur. L objectif est de distinguer activite du regulateur et depassement de temps physique avant de proposer un correctif.
+
+[FAIT en emulation] Recuperation egalement sur vrais builds navigateur, boot/cache avec et sans Banque. CUT prouve cumulatif par piste, remise a zero entre combos, lecture seule des flags ; fondu/repeat/masques/ABI et 256 etats conservent leur sortie. Audit exploratoire DSP Syntakt natif Toy/Bits/Swarm, cinq blocs : MACSR restaure et quatre accumulateurs vides a chaque fin de boucle. Pas de corruption persistante demontree.
+
+Validation test 3 : quatorze profils navigateur/Python, memes hashes 1.78 toutes options decochees ; vrais boots/callbacks avec et sans Banque, CUT cumulatif/reset/read-only et 256 etats audio passes. check_overlaps/registry et generateurs --check passent. Aucun correctif des clicks annonce.
