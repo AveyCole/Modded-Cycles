@@ -54,3 +54,14 @@ AveyCole demande explicitement le 17/10/2026 de publier en test avant le princip
 ## 6. Teste sur la machine (17/10/2026)
 
 AveyCole confirme le test publie : « that worked push to main ». Cette confirmation concerne la combinaison signalee dans le test1 ; les autres selections du catalogue restent verifiees en emulation. Promotion de PR58 autorisee. Les scripts et payloads CPU/CUT restent uniquement dans la copie test ; ils ne sont pas charges par le principal.
+
+
+## 7. Retrait du principal et regression de demarrage (17/10/2026)
+
+AveyCole signale ensuite Select All : `V04-M0-P401C4B44`. Le principal revient exactement a 1.83 via PR60 ; PR61 publie seulement la copie test2. La validation materielle precedente ne couvrait pas cette composition MIDI complete.
+
+[FAIT en emulation] `0x401c4b44` est le hook de chargement ChordKeys. La composition generique partageait son flux mais omettait `engine.chord_source`. Le composeur MIDI ne copiait donc pas ce code vers `0x401c383c` et ne protegeait pas sa reservation lors du cache disque. Le test de regression execute le vrai bootstrap puis ce hook : ancien code absent et retour impossible, correction avec octet projet, pile et retour conserves. Le champ est restaure ; aucun changement du corps ChordKeys.
+
+[FAIT] Le balayage elargi trouve aussi RETROSYN+WAVE sans Wizard (mask640) : le placeholder RETROSYN etait choisi comme ancien moteur a remplacer, laissant la recette WAVE autonome en plus du moteur combine. `compose-normal.js` choisit maintenant le vrai moteur ajoute avant le placeholder et retire les placeholders explicitement.
+
+Les nouvelles preuves `test_startup_combinations.js` et `emu/test_startup_build_matrix.py` couvrent les selections machines avec/sans Wizard et ChordKeys, profils minimal/maximal ; puis images signees des familles de demarrage, variantes de backends MIDI et cas RETROSYN/WAVE. Elles executent les sites OS de chargement/init projet, le constructeur de cache et le constructeur de table machines. Une reprise exige les empreintes du site et de l'image signee identiques. Cela ne constitue pas une garantie materielle pour chaque sous-ensemble arbitraire de toutes les options.
