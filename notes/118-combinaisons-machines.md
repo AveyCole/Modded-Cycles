@@ -65,3 +65,8 @@ AveyCole signale ensuite Select All : `V04-M0-P401C4B44`. Le principal revient e
 [FAIT] Le balayage elargi trouve aussi RETROSYN+WAVE sans Wizard (mask640) : le placeholder RETROSYN etait choisi comme ancien moteur a remplacer, laissant la recette WAVE autonome en plus du moteur combine. `compose-normal.js` choisit maintenant le vrai moteur ajoute avant le placeholder et retire les placeholders explicitement.
 
 Les nouvelles preuves `test_startup_combinations.js` et `emu/test_startup_build_matrix.py` couvrent les selections machines avec/sans Wizard et ChordKeys, profils minimal/maximal ; puis images signees des familles de demarrage, variantes de backends MIDI et cas RETROSYN/WAVE. Elles executent les sites OS de chargement/init projet, le constructeur de cache et le constructeur de table machines. Une reprise exige les empreintes du site et de l'image signee identiques. Cela ne constitue pas une garantie materielle pour chaque sous-ensemble arbitraire de toutes les options.
+
+
+[FAIT en emulation, test3] 8 192 compositions passent : 1 024 masques machines x Wizard oui/non x ChordKeys oui/non x profils minimal/maximal. 76 SYX signes passent le vrai bootstrap, init/chargement projet avant et apres cache, constructeur natif : 48 familles de demarrage, 12 variantes de backends MIDI et 16 cas RETROSYN/WAVE sans Wizard. La regression P401C4B44 reproduit le defaut test1 et passe sur la nouvelle image Select All. Le generateur de copie test passe `--check`.
+
+PR62 publie seulement quatre fichiers dans la copie test3. L'arbre `docs/flasher` reste exactement `bda47b81f3a726393be0b0b8d37e5fd5857e5e7c`, principal1.83. Les preuves et reparations source sont conservees sur `fix-machine-combinations`, sans promotion du principal.
