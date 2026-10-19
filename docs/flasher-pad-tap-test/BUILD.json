@@ -1,0 +1,11 @@
+{
+  "stamp": "2026-10-18-pad-tap-test-1",
+  "base": "2026-10-18-pad-mode-main-197",
+  "scope": "test-only",
+  "diagnostics": true,
+  "hardware_verified": false,
+  "short_tap_scramble": true,
+  "long_hold_pad_setup": true,
+  "pad_mode_persistent": false,
+  "sample_lock_filter": false
+}
