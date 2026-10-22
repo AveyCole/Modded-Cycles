@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=Tiny5&display=swap">
-<link rel="stylesheet" href="../assets/site.css?v=2026-10-12-08">
-<link rel="stylesheet" href="../assets/guide.css?v=2026-10-12-08">
+<link rel="stylesheet" href="../assets/site.css?v=2026-10-21-lowpass-copy-212">
+<link rel="stylesheet" href="../assets/guide.css?v=2026-10-21-lowpass-copy-212">
 <script>try{var l=localStorage.getItem("mc-lang"),t=localStorage.getItem("mc-theme")}catch(e){}document.documentElement.lang=l||(/^fr\b/i.test(navigator.language||"")?"fr":"en");if(t)document.documentElement.setAttribute("data-theme",t)</script>
 </head>
 <body data-page="guide">
@@ -379,7 +379,7 @@
               <tr><th>2 · DECAY</th><td><span data-l="en"><b>Crush</b>: 16 bits down to 1</span><span data-l="fr"><b>Crush</b> : de 16 bits à 1</span></td></tr>
               <tr><th>3 · COLOR</th><td><span data-l="en"><b>Rate</b>: sample rate from 48 kHz down to 1 kHz</span><span data-l="fr"><b>Rate</b> : fréquence d'échantillonnage de 48 kHz à 1 kHz</span></td></tr>
               <tr><th>4 · SHAPE</th><td><span data-l="en"><b>Pump</b>: sidechain ducking, below</span><span data-l="fr"><b>Pump</b> : sidechain, ci-dessous</span></td></tr>
-              <tr><th>5 · SWEEP</th><td><span data-l="en"><b>Filter</b>: low-pass left of centre, high-pass right of centre</span><span data-l="fr"><b>Filtre</b> : passe-bas à gauche du centre, passe-haut à droite</span></td></tr>
+              <tr><th>5 · SWEEP</th><td><span data-l="en"><b>Filter</b>: lowpass cutoff</span><span data-l="fr"><b>Filtre</b> : coupure du passe-bas</span></td></tr>
               <tr><th>6 · CONTOUR</th><td><span data-l="en"><b>Resonance</b> of the filter</span><span data-l="fr"><b>Résonance</b> du filtre</span></td></tr>
               <tr><th>7 · DELAY</th><td><span data-l="en"><b>Ring mod</b>: 30 Hz to 4 kHz</span><span data-l="fr"><b>Ring mod</b> : de 30 Hz à 4 kHz</span></td></tr>
               <tr><th>8 · REVERB</th><td><span data-l="en"><b>Noise riser</b>: white noise rising, on the whole output</span><span data-l="fr"><b>Noise riser</b> : un bruit blanc qui monte, sur toute la sortie</span></td></tr>
@@ -689,26 +689,15 @@
       </section>
 
       <section id="track-filter">
-        <h2><span class="n">20</span><span data-l="en">Per-track filter</span><span data-l="fr">Filtre par piste</span></h2>
-        <p class="lede"><span data-l="en">A filter on every track, like on a DJ mixer: turn one way for a low-pass, the other way for a high-pass; in the centre the sound is left untouched. The Model:Samples' range, with resonance and an envelope.</span><span data-l="fr">Un filtre sur chaque piste, comme sur une table de mixage DJ : d'un côté un passe-bas, de l'autre un passe-haut ; au centre, le son n'est pas touché. La plage du Model:Samples, avec résonance et enveloppe.</span></p>
-        <figure class="fig">
-          <div data-device data-scenes="machines @logo | machines,sweep @FILTER CUTOFF/L32 | machines,sweep @FILTER CUTOFF/OFF | machines,sweep @FILTER CUTOFF/H20 | machines,contour @FILTER RESO/80 | machines,color @FILTER ENV/+24" data-ms="1100"></div>
-        </figure>
-        <ol>
-          <li><span data-l="en">Hold <b>MACHINES</b> and turn <b>SWEEP</b>: <b>Filter Cutoff</b>. Left of the centre, a low-pass, shown <b>L</b> (L64 closes it down to 5 Hz); <b>OFF</b> in the centre; right of it, a high-pass, shown <b>H</b> (H63 cuts up to about 19 kHz).</span><span data-l="fr">Maintenez <b>MACHINES</b> et tournez <b>SWEEP</b> : <b>Filter Cutoff</b>. À gauche du centre, un passe-bas, affiché <b>L</b> (L64 le ferme jusqu'à 5 Hz) ; <b>OFF</b> au centre ; à droite, un passe-haut, affiché <b>H</b> (H63 coupe jusque vers 19 kHz).</span></li>
-          <li><span data-l="en">Still holding <b>MACHINES</b>: <b>CONTOUR</b> sets <b>Filter Reso</b> (0 to 127), the peak at the cutoff, louder every quarter turn up to a strong whistle; <b>COLOR</b> sets <b>Filter Env</b>, how far the envelope moves the cutoff (towards − it lowers it, towards + it raises it, OFF in the centre); <b>SHAPE</b> sets <b>Env Decay</b>, how fast it comes back (5 ms to 10 s). The envelope starts again at each note of the track.</span><span data-l="fr">Toujours avec <b>MACHINES</b> tenu : <b>CONTOUR</b> règle <b>Filter Reso</b> (0 à 127), la bosse à la fréquence de coupure, plus forte à chaque quart de tour jusqu'à un net sifflement ; <b>COLOR</b> règle <b>Filter Env</b>, de combien l'enveloppe déplace la fréquence (vers − elle la baisse, vers + elle la monte, OFF au centre) ; <b>SHAPE</b> règle <b>Env Decay</b>, la vitesse à laquelle elle revient (5 ms à 10 s). L'enveloppe repart à chaque note de la piste.</span></li>
-          <li><span data-l="en">Let go of <b>MACHINES</b>: the knobs play the machine again. Pressing MACHINES on its own still opens the machine menu.</span><span data-l="fr">Relâchez <b>MACHINES</b> : les potards reviennent à la machine. MACHINES appuyé seul ouvre toujours le menu des machines.</span></li>
-        </ol>
-        <dl class="facts">
-          <div><dt><span data-l="en">Parameters</span><span data-l="fr">Paramètres</span></dt><dd><span data-l="en">four real parameters of every machine, Syntakt engines included: p-locks (hold a step, then MACHINES and the knob), LFO and velocity destinations (FREQ, RESO, FENV, FDEC), MIDI CC 74 (cutoff) and 71 (resonance). Saved with the sound, the kit and the pattern.</span><span data-l="fr">quatre vrais paramètres de toutes les machines, moteurs du Syntakt compris : p-locks (tenez un pas, puis MACHINES et le potard), destinations du LFO et de la vélocité (FREQ, RESO, FENV, FDEC), CC MIDI 74 (fréquence) et 71 (résonance). Enregistrés avec le son, le kit et le pattern.</span></dd></div>
-          <div><dt><span data-l="en">Sound</span><span data-l="fr">Son</span></dt><dd><span data-l="en">a 2-pole filter (12 dB per octave), after the track's Volume + Dist and before pan, level and the delay and reverb sends, as on the Model:Samples: it also softens the distortion, and the 6-channel USB audio gets the filtered tracks. The resonance eases off at the very bottom and top of the range.</span><span data-l="fr">un filtre 2 pôles (12 dB par octave), après le Volume + Dist de la piste et avant le panoramique, le niveau et les envois delay et reverb, comme sur le Model:Samples : il adoucit aussi la distorsion, et l'audio USB 6 canaux reçoit les pistes filtrées. La résonance s'adoucit tout en bas et tout en haut de la plage.</span></dd></div>
-          <div><dt><span data-l="en">Processor</span><span data-l="fr">Processeur</span></dt><dd><span data-l="en">about 0.6 % of the audio time per filtered track, up to 0.75 % while its envelope or an LFO moves it; almost nothing at OFF. With many Syntakt engines, the load governor may fade a voice out a little sooner.</span><span data-l="fr">environ 0,6 % du temps audio par piste filtrée, jusqu'à 0,75 % quand son enveloppe ou un LFO le fait bouger ; presque rien sur OFF. Avec beaucoup de moteurs du Syntakt, le régulateur de charge peut éteindre une voix un peu plus tôt.</span></dd></div>
-          <div><dt><span data-l="en">Centre</span><span data-l="fr">Centre</span></dt><dd><span data-l="en">at OFF the track is exactly as before, even with resonance or envelope set, and the filter costs almost nothing. Between OFF and L1 or H1 the filter fades in, so that turning the knob or sweeping an LFO through the centre doesn't click.</span><span data-l="fr">sur OFF la piste est exactement comme avant, même avec une résonance ou une enveloppe réglée, et le filtre ne coûte presque rien. Entre OFF et L1 ou H1, le filtre entre en fondu, pour qu'un potard ou un LFO qui passe par le centre ne claque pas.</span></dd></div>
-          <div><dt><span data-l="en">Projects</span><span data-l="fr">Projets</span></dt><dd><span data-l="en">your sounds and projects open with the filter OFF. On another firmware, a sound plays without its filter, nothing else changes. The mod also fixes the original OS's saving of p-locks on added parameters, which came back on LFO Speed or not at all.</span><span data-l="fr">vos sons et projets s'ouvrent filtre sur OFF. Sur un autre firmware, un son joue sans son filtre, rien d'autre ne change. Le mod corrige aussi la sauvegarde par l'OS d'origine des p-locks des paramètres ajoutés, qui revenaient sur LFO Speed ou se perdaient.</span></dd></div>
-          <div><dt>Model-TG</dt><dd><span data-l="en">not together for now: both use MACHINES + SWEEP and CONTOUR. Once this filter is tested, Model-TG's own filter will make way for it and the two will go together. Goes with every other mod.</span><span data-l="fr">pas ensemble pour l'instant : les deux utilisent MACHINES + SWEEP et CONTOUR. Une fois ce filtre testé, celui de Model-TG lui laissera la place et les deux se combineront. Se combine avec tous les autres mods.</span></dd></div>
-          <div><dt><span data-l="en">Tested</span><span data-l="fr">Testé</span></dt><dd><span data-l="en">on a Model:Cycles, and in the emulator on the OS's own code: sound identical at the centre, filter, envelope, knobs, display, sound and pattern saving, MIDI CC.</span><span data-l="fr">sur un Model:Cycles, et en émulation sur le code même de l'OS : son identique au centre, filtre, enveloppe, potards, affichage, sauvegarde du son et du pattern, CC MIDI.</span></dd></div>
-        </dl>
-      </section>
+<h2><span data-l="en">Per-track lowpass filter</span><span data-l="fr">Filtre passe-bas par piste</span></h2>
+<p class="lede"><span data-l="en">Shape each track with a lowpass filter and resonance. Lower the cutoff to soften the sound; raise it to let more high frequencies through.</span><span data-l="fr">Sculptez chaque piste avec un filtre passe-bas et sa résonance. Baissez la coupure pour adoucir le son ; montez-la pour laisser passer davantage d’aigus.</span></p>
+<ol>
+<li><span data-l="en">Hold <b>MACHINES</b> and turn <b>SWEEP</b> for cutoff (0–127; 127 is fully open).</span><span data-l="fr">Maintenez <b>MACHINES</b> et tournez <b>SWEEP</b> pour la coupure (0–127 ; 127 est complètement ouvert).</span></li>
+<li><span data-l="en">Hold <b>MACHINES</b> and turn <b>CONTOUR</b> for resonance.</span><span data-l="fr">Maintenez <b>MACHINES</b> et tournez <b>CONTOUR</b> pour la résonance.</span></li>
+<li><span data-l="en">Fully open cutoff with resonance at zero bypasses the filter. Sample Wizard keeps its own filter.</span><span data-l="fr">Coupure complètement ouverte et résonance à zéro : le filtre est contourné. Sample Wizard conserve son propre filtre.</span></li>
+<li><span data-l="en">Use parameter locks, LFOs, MIDI CC74 for cutoff and CC71 for resonance. Settings save with the sound.</span><span data-l="fr">Utilisez les locks, les LFO, CC74 pour la coupure et CC71 pour la résonance. Les réglages sont sauvegardés avec le son.</span></li>
+</ol>
+</section>
 
       <section id="acid">
         <h2><span class="n">21</span><span data-l="en">ACID machine</span><span data-l="fr">Machine ACID</span></h2>
@@ -937,9 +926,9 @@
   </div>
 </footer>
 
-<script src="../assets/release.js?v=2026-10-12-08"></script>
-<script src="../assets/cycles.js?v=2026-10-12-08"></script>
-<script src="../assets/site.js?v=2026-10-12-08"></script>
+<script src="../assets/release.js?v=2026-10-21-lowpass-copy-212"></script>
+<script src="../assets/cycles.js?v=2026-10-21-lowpass-copy-212"></script>
+<script src="../assets/site.js?v=2026-10-21-lowpass-copy-212"></script>
 <section><h2>LFO 2 quick assign / Assignation rapide LFO 2</h2><p>On the second LFO page, hold LFO and turn a parameter knob to select its destination. Further turns adjust signed depth. Release LFO to keep the page open. Settings remain RAM only.</p><p>Sur la seconde page LFO, maintenez LFO et tournez un potentiomètre pour choisir sa destination. Poursuivez pour régler la profondeur signée. Relâchez LFO pour conserver la page ouverte. Réglages en RAM seulement.</p></section></body>
 </html>
 

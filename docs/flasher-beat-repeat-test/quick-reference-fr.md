@@ -125,12 +125,12 @@ Les TRIG jouent les degrés d’accords avec gamme, tonique et extensions au cho
 - Choisissez CHORD. TRIG 1–7 : degrés I–VII ; 8–14 : octave +1 ; 15–16 : I–II à l’octave +2.
 - FUNC + RETRIG : tonique, gamme et triade/7/9/11/13 par degré.
 
-## Filtre par piste (LP / OFF / HP)
+## Filtre passe-bas par piste
 
-Un filtre passe-bas/passe-haut par piste avec résonance et enveloppe, utilisable en locks et LFO.
+Un filtre passe-bas par piste avec résonance, utilisable en locks et LFO.
 
-- Maintenez MACHINES + SWEEP : passe-bas à gauche, off au centre, passe-haut à droite.
-- MACHINES + CONTOUR : résonance ; + COLOR : quantité d’enveloppe ; + SHAPE : durée d’enveloppe.
+- Maintenez MACHINES + SWEEP : coupure passe-bas (0–127 ; 127 = ouvert).
+- MACHINES + CONTOUR : résonance.
 
 ## LFO 2, 3, 4
 

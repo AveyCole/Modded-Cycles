@@ -278,9 +278,9 @@ FEATURES = [
     {
         "id": "track-filter",
         "cat": "sound",
-        "label": "Filtre par piste (LP / OFF / HP)",
-        "desc": "MACHINES tenu + SWEEP : un filtre par piste, passe-bas a gauche, rien au centre, passe-haut a droite. "
-                "CONTOUR : resonance ; COLOR et SHAPE : enveloppe du filtre (quantite, decay). P-locks, LFO, CC 74 / 71.",
+        "label": "Filtre passe-bas par piste",
+        "desc": "MACHINES tenu + SWEEP : un filtre par piste, coupure du passe-bas, de ferme a ouvert. "
+                "CONTOUR : resonance. P-locks, LFO, CC 74 / 71.",
         "status": "tested",
         "credit": None,
         # meme geste que le filtre de Model-TG (MACHINES + SWEEP / CONTOUR) : pas ensemble pour l'instant (notes/47 §7, §11)
@@ -433,6 +433,16 @@ def render():
     for p in sorted(DEV_DIR.glob("*.json")):
         if p.name != "device.json":
             t = json.loads(p.read_text(encoding="utf-8"))
+            if t["id"] == "track-filter":
+                # Texte public du filtre principal ; les octets restent intacts.
+                from fix_filter_page_copy import REPLACEMENTS
+                for field in ("name", "description"):
+                    values = t[field] if isinstance(t[field], list) else [t[field]]
+                    for i, value in enumerate(values):
+                        for old, new in REPLACEMENTS.items():
+                            value = value.replace(old, new)
+                        values[i] = value.replace("L64..OFF..H63 : coupure du passe-bas, de fermé à ouvert, 5 Hz à 20 kHz", "0–127 : coupure du passe-bas")
+                    t[field] = values if isinstance(t[field], list) else values[0]
             by_id[t["id"]] = t
 
     def load(tid):

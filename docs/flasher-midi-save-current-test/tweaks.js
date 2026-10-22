@@ -6896,10 +6896,10 @@ window.MC_TWEAKS = {
   {
    "id": "track-filter",
    "order": 48,
-   "name": "Filtre par piste : passe-bas, OFF, passe-haut",
+   "name": "Filtre passe-bas par piste",
    "description": [
     "Un filtre 2 pôles par piste, après Volume + Dist et avant le panoramique, les envois et le mixage (comme sur le Model:Samples) :",
-    "MACHINES tenu + SWEEP = Filter Cutoff (L64..OFF..H63 : passe-bas à gauche, rien au centre, passe-haut à droite, 5 Hz à 20 kHz), + CONTOUR = Filter Reso (Q 0,5 à 50),",
+    "MACHINES tenu + SWEEP = Filter Cutoff (0–127 : coupure du passe-bas), + CONTOUR = Filter Reso (Q 0,5 à 50),",
     "+ COLOR = Filter Env (l'enveloppe, relancée à chaque note, monte ou descend la fréquence), + SHAPE = Env Decay (5 ms à 10 s).",
     "Quatre paramètres de toutes les machines (descripteurs 1 à 4, k 28 à 31) : p-locks, LFO, vélocité, CC 74 et 71 ; sauvegardés avec le son (emplacements 30, 31, 18) et le pattern.",
     "Corrige au passage les p-locks des paramètres k >= 23 dans le pattern (ils revenaient sur LFO Speed).",
@@ -191238,8 +191238,8 @@ window.MC_TWEAKS = {
   },
   {
    "id": "track-filter",
-   "label": "Filtre par piste (LP / OFF / HP)",
-   "desc": "MACHINES tenu + SWEEP : un filtre par piste, passe-bas a gauche, rien au centre, passe-haut a droite. CONTOUR : resonance ; COLOR et SHAPE : enveloppe du filtre (quantite, decay). P-locks, LFO, CC 74 / 71.",
+   "label": "Filtre passe-bas par piste",
+   "desc": "MACHINES tenu + SWEEP : un filtre par piste, coupure du passe-bas, de ferme a ouvert. CONTOUR : resonance. P-locks, LFO, CC 74 / 71.",
    "status": "tested",
    "credit": null,
    "cat": "sound",

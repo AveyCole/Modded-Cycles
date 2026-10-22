@@ -230,3 +230,14 @@ corrompue sans fallback. PDF trois pages rendu et inspecte. Chevauchements :
 171 tweaks, aucun conflit nouveau. Les controles generiques tweaks.js/REGISTRY
 signalent des sorties deja desynchronisees ; aucun tweak ni allocation de ces
 catalogues n'est modifie par cette publication d'image fixe.
+
+
+## Textes du filtre apres publication 2.12 (21/10/2026)
+
+[FAIT, demande utilisateur] Apres la fusion du firmware 2.12 (PR111), AveyCole
+demande que les pages ne presentent plus le filtre comme LP/HP : le filtre
+principal est uniquement passe-bas. Les anciennes copies publiques app.js,
+tweaks.js, guides et references rapides sont corrigees en anglais/francais.
+Les instructions DJ gauche/centre/droite et l'ancien schema anime sont retires.
+Le script tools/fix_filter_page_copy.py conserve les octets des patches ; la
+generation du catalogue normalise aussi cette prose. Aucun firmware modifie.
