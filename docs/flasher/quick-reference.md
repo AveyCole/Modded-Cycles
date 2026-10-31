@@ -1,8 +1,8 @@
 # Feature and shortcut guide
 
-Supermodel 2.64 - 30 October 2026
+Supermodel 2.75 - 31 October 2026
 
-Main 2.64. Hold the first button while pressing the next button or turning the named knob. TRIG means a step key; pad means a track key; DATA means LEVEL/DATA. Full and Lite share the general controls; added-machine sections require that machine. Machine Optional extras are marked separately.
+Main 2.75. Hold the first button while pressing the next button or turning the named knob. TRIG means a step key; pad means a track key; DATA means LEVEL/DATA. Full and Lite share the general controls; added-machine sections require that machine. Machine Optional extras are marked separately.
 
 ## Included features
 
@@ -22,6 +22,7 @@ Main 2.64. Hold the first button while pressing the next button or turning the n
 
 | Feature | Controls | Behavior |
 |---|---|---|
+| CTRL-ALL latch | Double-tap TRACK; TRACK once or BACK exits | Two clean taps within 350 ms latch parameter-knob edits across the included tracks. Track and trig selection stay momentary. DATA and effect-selection knobs stay physical. The latch is Off after boot and is not saved. |
 | Step Recorder | Playback stopped: press REC twice; PLAY advances; STOP goes back; press REC again to exit | Enter step recording and play notes to write successive steps. PLAY advances one step; STOP moves back one step; press REC again to leave Step Recorder. |
 | Latching mute | TRACK + tap FUNC | First choose Mute: LTC in Mod Setup. Then latch mute mode with this gesture; tap FUNC again to leave. Mute: Stk keeps stock behavior (default). |
 | Solo in mute mode | In latching mute mode, hold FUNC + press T1–T6 | Solo that track. Press the soloed track again to restore the previous mute state; tracks already muted remain muted. |
@@ -85,7 +86,7 @@ Main 2.64. Hold the first button while pressing the next button or turning the n
 
 | Feature | Controls | Behavior |
 |---|---|---|
-| Machine browsing | Press MACHINES, then turn DATA | Turn DATA to choose a machine. MIDI Out is last. Scrolling through MIDI Out preserves your previous audio settings. |
+| Machine browsing | Press MACHINES, then turn DATA; press DATA to commit in Sil mode | Mod Setup > Global > Mac: Sil browses without changing the sound until DATA is pressed; Stk applies each selection immediately. The machine screen retains its stock layout. MIDI Out is last. |
 | Added-machine starting points | Check the named control | Numeric controls such as TINY Tone/Excite, PUNCH Color/Contour and Elder Wave/Warp/Noise/Motion run from 0 at the minimum to 127 at the maximum; 64 is the midpoint. Starting settings need not be zero. PITCH and FINE are centered: displayed 0 means no pitch offset. SHAPE model selectors and PUNCH ratios use their own scales. A minimum value is not a universal clean-sound setting. |
 | Elder controls | Select Elder in MACHINES | COLOR = Wave; SHAPE = Warp; SWEEP = Noise; CONTOUR = Motion. PITCH, DECAY, PUNCH, Gate and Fine remain available. Original synth inspired by Junior by Fors. Starting values: Wave 0, Warp 0, Noise 0, Motion 0, Decay 50. |
 | TINY controls | Select TINY in MACHINES | COLOR: Tone; SHAPE: Model 0–51; SWEEP: Mod; CONTOUR: Excite. Starting values: Tone 64, Model 0, Mod 64, Excite 32, Decay 60. |
@@ -156,8 +157,9 @@ Tap SETTINGS + TRACK and release to open Mod Setup. Hold the combo to run SCRAMB
 
 | Feature | Controls | Behavior |
 |---|---|---|
-| Global / Track / Song | DATA enters; BACK returns | Global: Pad, USB, Num, Mute, Dly, DX, QntM, Grv, LFOs, FX, ACID (when installed), JUMP. Track: SCRM, S.Chn, Human. Song opens the arrangement grid. |
+| Global / Track / Song | DATA enters; BACK returns | Global: Pad, Mac, USB, Num, Mute, Dly, DX, QntM, Grv, LFOs, FX, ACID (when installed), JUMP. Track: SCRM, S.Chn, Human. Song opens the arrangement grid. |
 | Access and sound editing | Tap SETTINGS + TRACK | Available from the main screen or machine selection. DATA navigates Mod Setup; sound knobs show the edited parameter for two seconds, then return to the same menu position. BACK closes the popup first, then Mod Setup; machine selection stays open underneath. |
+| Mac | Sil / Stk | Machine browsing: Sil requires DATA to commit; Stk applies while browsing. Saved globally when playback and recording stop. |
 | Pad | Stk / SIL Default: Stk | Stk keeps the original track-pad behavior: a pad selects and plays its track. Silent selects the track without sounding it; hold TRACK and press a track pad to select and play. |
 | USB | 2ch / 6ch Default: 2ch | 2ch sends the stereo mix to the computer. 6ch sends six separate mono tracks, before pan and without the mix delay/crusher/reverb/chorus returns. Stereo audio from the computer to Cycles works in both modes. Stop playback before changing this toggle. Changing modes reconnects the USB audio device; select its new channel layout in your DAW if needed. |
 | Num | Off / On Default: Off | Off keeps the original volume and pan display. On shows numeric volume and pan values when you adjust those controls. |

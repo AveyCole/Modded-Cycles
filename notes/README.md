@@ -343,3 +343,23 @@ Générateur de séquence (note 53) : **testé sur la machine par AveyCole le 10
 - [210 - Parite stock et choix MACHINES](210-parite-stock-et-machines-confirmees.md) : PUNCH natif, masques LFO, Wizard USB et confirmation DATA ; prototype Full2.65 et preuves natives.
 
 - [211 - Comparaisons DSP EMAC et reverbes](211-comparaisons-dsp-emac-reverbes.md) : deux comparaisons Full, parite PCM, couts instructions et audit SRAM/USB/panneau.
+
+- [212 - Protection des voix stock](212-protection-voix-stock.md) : regulateur natif execute, parite PCM et candidat prive Full2.66 ; verification A01 appareil en attente.
+
+- [213 - Audit cout audio](213-audit-cout-audio.md) : timing degrade seulement apres PLAY ; cout voix natif mesure, perimetre IRQ complete restant a profiler.
+
+- [214 - Routage inactif](214-routage-inactif.md) : Full2.68 prive, bypass sans affectation/queue, PCM mixeur exact et457instructions economisees ;6ch conserve.
+
+- [215 - Mixeur en SRAM](215-mixeur-en-sram.md) : Full2.69 prive, noyau natif126octets dans queue verifiee,64comparaisons PCM/EMAC exactes ; gain materiel inconnu.
+
+- [216 - Selection des voix stock](216-selection-voix-stock.md) :2.70 prive, exclusion du seul vol ajoute ; arret idle2.65 preserve et teste.
+
+- [217 - Profilage IRQ par etapes](217-profilage-irq-par-etapes.md) : diagnostic prive2.71, pire bloc partitionne et3pages DX ; clics2.70 au boot neuf confirmes utilisateur.
+
+- [218 - Oscillateurs : entrees nulles](218-oscillateurs-entrees-nulles.md) : Full2.73 prive, 512 cas exacts, presets A01 exacts ; -1,58 % instructions voix, materiel a verifier.
+
+- [219 - Routage bare-metal compact](219-routage-baremetal-compact.md) : 2.74 prive, noyaux stock, dispatch borne, polling inactif evite ; module 12 028 octets, materiel non valide.
+
+- [220 - Verrou CTRL-ALL UI](220-verrou-control-all-ui.md) : Full2.75 prive depuis stock-screen2.65, double TRACK, sortie TRACK/BACK ; audio existant identique, hardware a verifier.
+
+- [221 - Bases2.75 et captures](221-bases275-et-captures.md) : quatre editions preparees et validees, Optional/MD controles ; captures poussees, firmware en attente de l exception Git.

@@ -1,4 +1,4 @@
-"""Manuel imprime2.64 : contenu present, couverture vectorielle et controle PDF."""
+"""Manuel imprime2.75 : contenu present, couverture vectorielle et controle PDF."""
 from pathlib import Path
 import json,re,copy
 from html import escape
@@ -11,10 +11,10 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from pypdf import PdfReader
 
-R=Path(__file__).resolve().parents[1];W=R/'output/manual264';W.mkdir(parents=True,exist_ok=True)
-OUT=R/'output/pdf/Supermodel-2.64-Manual.pdf';OUT.parent.mkdir(parents=True,exist_ok=True)
+R=Path(__file__).resolve().parents[1];W=R/'output/manual275';W.mkdir(parents=True,exist_ok=True)
+OUT=R/'output/pdf/Supermodel-2.75-Manual.pdf';OUT.parent.mkdir(parents=True,exist_ok=True)
 DATA=json.loads((R/'tools/shortcut_guide_content.json').read_text(encoding='utf-8'))
-assert DATA['release']=='2.64'
+assert DATA['release']=='2.75'
 for name,file in [('Body','calibri.ttf'),('Bold','calibrib.ttf'),('Italic','calibrii.ttf'),('Light','calibril.ttf')]:
  pdfmetrics.registerFont(TTFont(name,'C:/Windows/Fonts/'+file))
 pdfmetrics.registerFontFamily('Body',normal='Body',bold='Bold',italic='Italic',boldItalic='Bold')
@@ -38,7 +38,7 @@ def S(*items):return ('steps',items)
 def C(title,text):return ('call',(title,text))
 def page(group,title,lead,*blocks):pages.append(dict(group=group,title=title,lead=lead,blocks=list(blocks)))
 
-page('START HERE','Contents & conventions','A practical reference for Supermodel 2.64 on Model:Cycles.',
+page('START HERE','Contents & conventions','A practical reference for Supermodel 2.75 on Model:Cycles.',
  P('Use the chapter list below for a complete walkthrough, or turn to the shortcut reference when you need a particular gesture. The machine chapters describe the Full library. Machine Optional controls are grouped in their own chapter.'),
  ('contents',None),
  H('How to read the controls'),
@@ -71,6 +71,7 @@ page('GETTING STARTED','Your first session','Build a small pattern, shape it, an
 page('SETTINGS','Global preferences','Tap SETTINGS + TRACK, choose Global, then select a row.',
  T(['Row','Choices and operation'],[
  ['Pad','Stk: a pad selects and plays. SIL: a pad selects silently; TRACK + pad selects and plays. Default: Stk.'],
+ ['Mac','Sil: browse silently, then click DATA to commit. Stk: apply while browsing. Saved globally.'],
  ['USB','2ch: stereo mix to the computer. 6ch: six separate mono tracks. Stop playback before changing. Default: 2ch.'],
  ['Num','Off or On. On displays numeric volume and pan values as you adjust them. Default: Off.'],
  ['Mute','Stk: momentary mute controls. LTC: TRACK + tap FUNC latches mute mode. Default: Stk.'],
@@ -86,6 +87,7 @@ page('SETTINGS','Global preferences','Tap SETTINGS + TRACK, choose Global, then 
  C('Pattern settings use Save Project','Sidechain, Scramble checklists, FX choices and their pattern-specific controls are saved with the project. Closing Mod Setup alone does not save those project changes.'))
 
 page('PERFORMANCE','Tracks, mute & repeat','Select and perform tracks while keeping the controls close at hand.',
+ C('CTRL-ALL latch','Double-tap TRACK within 350 ms to latch parameter-knob edits across the included tracks. Press TRACK once or BACK to exit. Track/trig selection remains momentary; DATA and effect selection remain physical. The latch starts Off and is not saved.'),
  H('Mute and solo'),
  P('Set <b>Global > Mute > LTC</b>. Hold <b>TRACK</b> and tap <b>FUNC</b> to latch mute mode. Tap track pads to mute or unmute them. Tap FUNC again to leave.'),
  P('While mute mode is latched, hold <b>FUNC</b> and press a track pad to solo it. Press that pad again, or leave mute mode, to restore the previous mute state. Tracks that were already muted stay muted.'),
@@ -217,7 +219,7 @@ catalog=[
  ['KICK / SNARE / METAL / PERC / TONE / CHORD','The six Model:Cycles audio machines.'],
  ['Sample Wizard','Sample playback, slicing, granular, stretch, pluck and wavetable modes.'],
  ['SD Vintage','Tunable snare with a metallic body.'],['Clap Vintage','Clap synthesis with body and attack spacing.'],['SY Toy','Tuned percussion with impact and evolving partials.'],['SY Bits','Digital oscillators, detune and rate/bit reduction.'],['Swarm','Three detuned saws for leads and basses.'],['MACRO','47 synthesis models, from classic tones to textures.'],['ACID','Resonant bass synthesis with envelope and drive.'],['WAVE','Wavetable scanning and custom table import.'],['Feral','Ten synthesis models for characterful electronic sounds.'],['ELDER','Chip-style synthesis for melodies, basses and percussion.'],['TINY','52 synthesis models with Tone, Mod and Excite.'],['Shadow','Pulsar/noise synthesis with Grain, Density, Spread and Chaos.'],['SPEAK','128-word speech synthesis.'],['RETROSYN','Six chip oscillator styles, fixed arpeggios and four-bit PUNCH.'],['PUNCH','Twelve FM percussion models.'],['ESTUS','Eight drum engines with sound-shaping and advanced controls.'],['MIDI Out','Notes, chords, CC controls and two MIDI LFOs for external instruments.']]
-page('MACHINES','Machine library','Press MACHINES, then turn DATA to choose a machine.',
+page('MACHINES','Machine library','Press MACHINES, turn DATA to browse, then click DATA to commit in Sil mode.',
  T(['Machine','Sound and purpose'],catalog,[159,351]),
  P('Full includes this library. Lite uses the six Model:Cycles audio machines and the shared performance, effects and modulation functions. Machine Optional follows your enabled machine selection.'),
  P('Numeric sound controls commonly span 0–127, with 64 as the midpoint. PITCH and FINE are centered: displayed 0 means no pitch offset. Model selectors and ratio controls use their own scales.'))
@@ -344,7 +346,7 @@ page('REFERENCE / SPEAK','Word library','Choose the index with SHAPE, or paramet
 
 page('REFERENCE','Find it quickly','An alphabetical guide to the manual.',('index',None),
  H('A saving reminder'),P('Use Save Project for pattern settings. Global preferences save while stopped. Temporary save/reload is a performance snapshot.'),
- H('About this edition'),P('Supermodel 2.64 • Model:Cycles • English print edition • 30 October 2026.'),
+ H('About this edition'),P('Supermodel 2.75 • Model:Cycles • English print edition • 31 October 2026.'),
  P('Engine acknowledgments include Glycinate (Feral), Fors (inspiration for ELDER and Shadow), Emilie Gillet (MACRO/Braids and scale quantization), 100demons (PUNCH), and durchgemacht and Claude (POTS). POTS uses the MIT-licensed model27 DSP.'),
  P('Control names in this manual follow the machine’s panel and display. Machine-specific chapters apply when that machine is installed.'))
 
@@ -352,7 +354,7 @@ conventions=pages[0]['blocks'][3:]
 pages[0]['blocks']=pages[0]['blocks'][:2]
 pages.insert(1,dict(group='START HERE',title='Buttons & editions',lead='Read gestures consistently and find the chapters that apply to your build.',blocks=conventions+[
  H('Acknowledgments'),P("Glycinate, Fors.Fm, PPPCCC, DavidCaruso, Emilie Gillet, Durchgemacht, 18nelli18, and every member of the Modded-Cycles Discord server who rode with me through this. Y'all rule.")]))
-pages[-1]['blocks']=[pages[-1]['blocks'][0],P('Supermodel 2.64 • Model:Cycles • English print edition • 30 October 2026.')]
+pages[-1]['blocks']=[pages[-1]['blocks'][0],P('Supermodel 2.75 • Model:Cycles • English print edition • 31 October 2026.')]
 at=next(i for i,p in enumerate(pages) if p['title']=='MACRO, ACID & WAVE')
 pages[at]['title']='ACID & WAVE';pages[at]['lead']='Resonant bass synthesis and wavetable motion.'
 pages[at]['blocks']=pages[at]['blocks'][3:]
@@ -370,7 +372,7 @@ pages.insert(at,dict(group='MACHINES / MULTI-MODEL',title='MACRO',lead='Explore 
  C('Model behavior','Different models use their timbre parameters differently. A knob’s minimum position is not a universal neutral setting.')]))
 
 
-# Chapitres2.64 : operations presentes, sans historique des corrections.
+# Chapitres2.75 : operations presentes, sans historique des corrections.
 by_title={p['title']:p for p in pages}
 by_title['Global preferences']['blocks'][0][1][1].append(['JUMP','Off / On. With On, PATTERN then FUNC + TRIG jumps immediately and keeps playback position. Default: Off. Saves globally.'])
 for p in pages:
@@ -437,7 +439,7 @@ def cover(c):
  c.setFillColor(INK);c.setFont('Light',52);c.drawString(48,588,'SUPERMODEL')
  c.setFont('Body',23);c.drawString(51,548,'Make it yours.')
  c.setFillColor(MUTED);c.setFont('Body',13);c.drawString(51,500,'Sounds • sequencing • performance • control')
- c.setFont('Bold',12);c.setFillColor(GREEN);c.drawString(51,469,'RELEASE 2.64')
+ c.setFont('Bold',12);c.setFillColor(GREEN);c.drawString(51,469,'RELEASE 2.75')
  c.setStrokeColor(LINE);c.line(51,442,561,442)
  patterns=[{0,4,8,12},{4,12},{0,2,4,6,8,10,12,14},{3,7,11,15},{0,5,10,13},{1,6,9,14}]
  for track,pattern in enumerate(patterns):
@@ -454,7 +456,7 @@ def chrome(c,doc):
  if doc.page==1:cover(c);c.restoreState();return
  index=doc.page-2
  group=pages[index]['group'] if index<len(pages) else 'SUPERMODEL'
- c.setFillColor(GREEN);c.setFont('Bold',8);c.drawString(51,759,'SUPERMODEL 2.64')
+ c.setFillColor(GREEN);c.setFont('Bold',8);c.drawString(51,759,'SUPERMODEL 2.75')
  c.setFillColor(MUTED);c.setFont('Body',8);c.drawRightString(561,759,group)
  c.setStrokeColor(LINE);c.line(51,749,561,749);c.line(51,38,561,38)
  c.setFont('Body',8);c.drawString(51,24,'MODEL:CYCLES  /  USER MANUAL');c.drawRightString(561,24,str(doc.page))
@@ -513,7 +515,7 @@ def build_flow():
  return flow[:-1]
 
 def markdown():
- lines=['# SUPERMODEL','## User manual · Release 2.64','','Model:Cycles · Full / Lite / Machine Optional','']
+ lines=['# SUPERMODEL','## User manual · Release 2.75','','Model:Cycles · Full / Lite / Machine Optional','']
  for p in pages:
   lines+=['# '+p['title'],'',p['lead'],'']
   for kind,value in p['blocks']:
@@ -525,16 +527,16 @@ def markdown():
  return '\n'.join(lines)
 
 if __name__=='__main__':
- doc=SimpleDocTemplate(str(OUT),pagesize=letter,leftMargin=51,rightMargin=51,topMargin=63,bottomMargin=53,title='Supermodel 2.64 — User Manual',author='Supermodel',subject='Current features and controls for Model:Cycles')
+ doc=SimpleDocTemplate(str(OUT),pagesize=letter,leftMargin=51,rightMargin=51,topMargin=63,bottomMargin=53,title='Supermodel 2.75 — User Manual',author='Supermodel',subject='Current features and controls for Model:Cycles')
  doc.build(build_flow(),onFirstPage=chrome,onLaterPages=chrome)
  r=PdfReader(OUT);expected=len(pages)+1
  print('Pages:',len(r.pages),'expected:',expected)
  for i,p in enumerate(r.pages):print(i+1,' '.join((p.extract_text() or '').split())[:105])
- (W/'Supermodel-2.64-Manual.md').write_text(markdown(),encoding='utf-8',newline='\n')
+ (W/'Supermodel-2.75-Manual.md').write_text(markdown(),encoding='utf-8',newline='\n')
  (W/'layout.json').write_text(json.dumps(dict(expected_pages=expected,actual_pages=len(r.pages),chapters=[dict(page=i+2,title=p['title']) for i,p in enumerate(pages)]),indent=2)+'\n')
  assert len(r.pages)==expected, 'A chapter overflowed its intended page'
  for ch in [dict(page=i+2,title=p['title']) for i,p in enumerate(pages)]:assert ch['title'] in r.pages[ch['page']-1].extract_text(),ch
  import shutil
  for folder in ('flasher','flasher-optional'):
-  shutil.copyfile(OUT,R/'docs'/folder/'user-manual.pdf');shutil.copyfile(W/'Supermodel-2.64-Manual.md',R/'docs'/folder/'user-manual.md')
+  shutil.copyfile(OUT,R/'docs'/folder/'user-manual.pdf');shutil.copyfile(W/'Supermodel-2.75-Manual.md',R/'docs'/folder/'user-manual.md')
  print('PDF:',OUT)

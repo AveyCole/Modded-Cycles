@@ -1,8 +1,8 @@
 # Guide des fonctions et raccourcis
 
-Supermodel2.64 - 30 octobre2026
+Supermodel2.75 - 30 octobre2026
 
-Principal2.64. Maintenez le premier bouton pendant le second geste. TRIG : touche de pas ; pad : touche de piste ; DATA : LEVEL/DATA. Full et Lite partagent les commandes generales ; les sections machines exigent leur presence. Les extras Machine Optional sont identifies separement.
+Principal2.75. Maintenez le premier bouton pendant le second geste. TRIG : touche de pas ; pad : touche de piste ; DATA : LEVEL/DATA. Full et Lite partagent les commandes generales ; les sections machines exigent leur presence. Les extras Machine Optional sont identifies separement.
 
 ## Fonctions incluses
 
@@ -22,6 +22,7 @@ Principal2.64. Maintenez le premier bouton pendant le second geste. TRIG : touch
 
 | Fonction | Commandes | Comportement |
 |---|---|---|
+| Verrou CTRL-ALL | Double tap TRACK ; TRACK ou BACK quitte | Deux taps simples en350ms verrouillent les editions par potards sur les pistes incluses. Selection des pistes/trigs momentanee. DATA et selecteurs FX restent physiques. Off au demarrage, non sauvegarde. |
 | Step Recorder | Lecture arrêtée : REC deux fois ; PLAY avance ; STOP recule ; REC quitte | Jouez des notes pour écrire les pas successifs. PLAY avance d’un pas, STOP recule d’un pas. |
 | Mute verrouillé | TRACK + appui bref sur FUNC | Choisissez d’abord Mute: LTC dans Mod Setup. FUNC quitte le mode verrouillé ; Stk conserve le mode natif. |
 | Solo en mute | En mode mute verrouillé : FUNC + T1–T6 | Isole la piste. Rappuyez sur son pad, ou quittez le mode mute, pour restaurer les mutes précédents. |
@@ -85,7 +86,7 @@ Principal2.64. Maintenez le premier bouton pendant le second geste. TRIG : touch
 
 | Fonction | Commandes | Comportement |
 |---|---|---|
-| Defilement machines | Appuyer sur MACHINES, puis tourner DATA | Tournez DATA pour choisir une machine. MIDI Out est en dernier. Le passage par MIDI Out conserve vos réglages audio précédents. |
+| Parcours des machines | MACHINES, puis tourner DATA ; cliquer DATA pour valider en Sil | Mod Setup > Global > Mac : Sil conserve le son jusqu au clic DATA ; Stk applique chaque choix immediatement. Affichage natif conserve. MIDI Out en dernier. |
 | Points de depart des machines ajoutees | Verifier la commande nommee | Les commandes numeriques comme Tone/Excite de TINY, Color/Contour de PUNCH et Wave/Warp/Noise/Motion de Elder vont de 0 au minimum a 127 au maximum ; 64 est le milieu. Les valeurs de depart ne sont pas forcement nulles. PITCH et FINE sont centres : 0 affiche signifie aucune transposition. Les selecteurs de modele SHAPE et les ratios PUNCH ont leurs propres echelles. Le minimum n est pas un reglage universel de son neutre. |
 | Commandes Elder | Choisir Elder dans MACHINES | COLOR = Wave ; SHAPE = Warp ; SWEEP = Noise ; CONTOUR = Motion. PITCH, DECAY, PUNCH, Gate et Fine conservés. Synthé original inspiré de Junior de Fors. Valeurs de depart : Wave 0, Warp 0, Noise 0, Motion 0, Decay 50. |
 | Commandes TINY | Choisir TINY dans MACHINES | COLOR : Tone ; SHAPE : Model 0–51 ; SWEEP : Mod ; CONTOUR : Excite. Valeurs de depart : Tone 64, Model 0, Mod 64, Excite 32, Decay 60. |
@@ -156,8 +157,9 @@ Appuyez brièvement sur SETTINGS + TRACK puis relâchez pour ouvrir Mod Setup. M
 
 | Fonction | Commandes | Comportement |
 |---|---|---|
-| Global / Track / Song | DATA entre ; BACK revient | Global : Pad, USB, Num, Mute, Dly, DX, QntM, Grv, LFOs, FX, ACID si installe, JUMP. Track : SCRM, S.Chn, Human. Song ouvre la grille d arrangement. |
+| Global / Track / Song | DATA entre ; BACK revient | Global : Pad, Mac, USB, Num, Mute, Dly, DX, QntM, Grv, LFOs, FX, ACID si installe, JUMP. Track : SCRM, S.Chn, Human. Song ouvre la grille d arrangement. |
 | Accès et réglage du son | Appui bref sur SETTINGS + TRACK | Disponible depuis l’écran principal ou la sélection des machines. DATA parcourt Mod Setup ; les commandes du son affichent le paramètre deux secondes puis reviennent à la même position. BACK ferme d’abord la fenêtre puis Mod Setup ; la sélection des machines reste ouverte en dessous. |
+| Mac | Sil / Stk | Parcours : Sil demande un clic DATA ; Stk applique pendant le parcours. Sauvegarde globale a l arret de la lecture/enregistrement. |
 | Pad | Stk / SIL ; défaut Stk | Stk sélectionne et joue. SIL sélectionne silencieusement ; TRACK + pad sélectionne et joue. ChordKeys exige TRACK + pad pour quitter la piste. |
 | USB | 2ch / 6ch ; défaut 2ch | 2ch : mix stéréo avec effets. 6ch : six pistes mono avant panoramique, sans retours delay/crusher/reverb/chorus. Retour ordinateur stéréo dans les deux modes. Arrêtez avant de changer ; le périphérique USB se reconnecte. |
 | Num | Off / On ; défaut Off | On affiche volume et panoramique en chiffres ; Off garde l’affichage natif. |

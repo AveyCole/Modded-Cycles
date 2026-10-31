@@ -36,10 +36,18 @@ e.emac.fast[0x400a82cc]=lambda:None;e.emac.next[0x400a82cc]=sy['dry_osc']
 patched='acid_arp' in meta or meta.get('acid_articulation',{}).get('arp_retrigger',False)
 if patched:
  art=meta.get('acid_arp',meta.get('acid_articulation'));
- if 'acid_articulation' in meta:sy=dict(sy,trk=art['symbols']['trk'])
+ if 'trk' in art['symbols']:sy=dict(sy,trk=art['symbols']['trk'])
  f=W/'arp-module.bin';f.write_bytes(e.uc.mem_read(art['code'],art['code_bytes']));e.emac.install(emac.disasm(str(f),art['code'],art['code'],art['code']+art['code_bytes']))
 
 f=W/'native-extra.bin';f.write_bytes(e.uc.mem_read(0x468c2000,0x1000));e.emac.install(emac.disasm(str(f),0x468c2000,0x468c2000,0x468c3000))
+if meta.get('stock_voice_protection',{}).get('enabled') or meta.get('idle_routing_fast_path') or meta.get('sram_mixer',{}).get('enabled') or meta.get('one_mod_osc') or meta.get('control_all_latch'):
+ def native_continue(u,pc,size,data):
+  sp=u.reg_read(C.UC_M68K_REG_A7);u.reg_write(C.UC_M68K_REG_PC,int.from_bytes(u.mem_read(sp,4),'big'));u.reg_write(C.UC_M68K_REG_A7,sp+4)
+ from unicorn import UC_HOOK_CODE
+ e.uc.hook_add(UC_HOOK_CODE,native_continue,begin=0x40000542,end=0x40000542);e.uc.reg_write(C.UC_M68K_REG_SR,0x2700);e.uc.reg_write(C.UC_M68K_REG_A0,E.PARAMS+0x8000);e.call(meta['control_all_latch']['boot_target'] if meta.get('control_all_latch') else meta['activity_masks']['symbols']['am_boot_finish'])
+ if meta.get('stock_voice_protection',{}).get('enabled'):assert e.uc.mem_read(0x8000e8b6,1)==b'\x64'
+if meta.get('one_mod_osc'):
+ at=meta['activity_masks']['code'];n=meta['activity_masks']['code_bytes'];f=W/'one-mod-primary.bin';f.write_bytes(e.uc.mem_read(at,n));e.emac.install(emac.disasm(str(f),at,at,at+n));target=meta['activity_masks']['symbols']['om_osc'];assert bytes(e.uc.mem_read(0x400a82cc,6))==b'\x4e\xf9'+struct.pack('>I',target);e.emac.next[0x400a82cc]=target
 stock=tw.engine(real_load(DEV/'firmware/model-cycles_OS1.13.syx'))
 for eng in (stock,e):
  for t in range(6):

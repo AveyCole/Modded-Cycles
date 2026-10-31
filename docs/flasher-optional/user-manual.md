@@ -1,11 +1,11 @@
 # SUPERMODEL
-## User manual · Release 2.64
+## User manual · Release 2.75
 
 Model:Cycles · Full / Lite / Machine Optional
 
 # Contents & conventions
 
-A practical reference for Supermodel 2.64 on Model:Cycles.
+A practical reference for Supermodel 2.75 on Model:Cycles.
 
 Use the chapter list below for a complete walkthrough, or turn to the shortcut reference when you need a particular gesture. The machine chapters describe the Full library. Machine Optional controls are grouped in their own chapter.
 
@@ -63,6 +63,7 @@ Tap SETTINGS + TRACK, choose Global, then select a row.
 | Row | Choices and operation |
 | --- | --- |
 | Pad | Stk: a pad selects and plays. SIL: a pad selects silently; TRACK + pad selects and plays. Default: Stk. |
+| Mac | Sil: browse silently, then click DATA to commit. Stk: apply while browsing. Saved globally. |
 | USB | 2ch: stereo mix to the computer. 6ch: six separate mono tracks. Stop playback before changing. Default: 2ch. |
 | Num | Off or On. On displays numeric volume and pan values as you adjust them. Default: Off. |
 | Mute | Stk: momentary mute controls. LTC: TRACK + tap FUNC latches mute mode. Default: Stk. |
@@ -84,6 +85,8 @@ BACK closes Mod Setup and saves global preferences. If playback is running, the 
 # Tracks, mute & repeat
 
 Select and perform tracks while keeping the controls close at hand.
+
+**CTRL-ALL latch** — Double-tap TRACK within 350 ms to latch parameter-knob edits across the included tracks. Press TRACK once or BACK to exit. Track/trig selection remains momentary; DATA and effect selection remain physical. The latch starts Off and is not saved.
 
 ## Mute and solo
 
@@ -409,7 +412,7 @@ Global > Dly > Div shows musical divisions for Delay, including dotted and tripl
 
 # Machine library
 
-Press MACHINES, then turn DATA to choose a machine.
+Press MACHINES, turn DATA to browse, then click DATA to commit in Sil mode.
 
 | Machine | Sound and purpose |
 | --- | --- |
@@ -832,4 +835,4 @@ For speech controls and an example phrase, see the SPEAK chapter.
 
 An alphabetical guide to the manual.
 
-Supermodel 2.64 • Model:Cycles • English print edition • 30 October 2026.
+Supermodel 2.75 • Model:Cycles • English print edition • 31 October 2026.

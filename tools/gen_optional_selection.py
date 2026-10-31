@@ -68,16 +68,10 @@ def main():
  packed+=bytes((-(len(packed)-8-(oldend-START)))&3)
  shift=len(packed)-8-(oldend-START);relocations=[]
  if 'direct_jump' in meta:
-  first=meta['direct_jump']['loader'];last=int.from_bytes(original[0x40195adc-BASE:0x40195ae0-BASE],'big')
-  sparse=meta.get('acid_articulation',meta.get('wizard_priority'))
-  loaders=(first,sparse['previous_loader'],last) if sparse else (first,last)
-  for loader in loaders:
-   span=512 if sparse and loader==last else 124
-   for offset in range(loader-BASE,loader-BASE+span,2):
-    value=int.from_bytes(original[offset:offset+4],'big')
-    if first<=value<BASE+len(original):
-     relocations.append(dict(at=BASE+offset,old=value));struct.pack_into('>I',tail,offset-oldend,value+shift)
-  assert len(relocations)==(5 if sparse else 3)
+  from sparse_loader_relocations import collect
+  relocations=collect(original,meta)
+  last=int.from_bytes(original[0x40195adc-BASE:0x40195ae0-BASE],'big')
+  for fix in relocations:struct.pack_into('>I',tail,fix['at']-BASE-oldend,fix['old']+shift)
   struct.pack_into('>I',prefix,0x40195adc-BASE,last+shift)
  struct.pack_into('>I',prefix,0x40195ad0-BASE,BASE+START+len(packed)-8)
  main=bytes(prefix)+packed[8:]+bytes(tail)
